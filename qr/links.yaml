@@ -1,0 +1,47 @@
+# QR / LINK REGISTER — single source for all QR codes (segno SVG output).
+# kind: local  = relative link to mission files in the same distribution
+#       portal = fictional online portal; PLACEHOLDER domain (.example) until real
+#                domain + branding approval at artwork lock.
+links:
+  - qr_id: Q-M01
+    page: 16
+    mission: m01-transit
+    kind: local
+    url: missions/m01-transit/index.html
+    note: printed inside magazine; resolves when magazine ships with the digital bundle
+  - qr_id: Q-M02
+    page: 20
+    mission: m02-waveform
+    kind: local
+    url: missions/m02-waveform/index.html
+    note: same distribution bundle
+  - qr_id: Q-M03
+    page: 31
+    mission: m03-lunar-base
+    kind: local
+    url: missions/m03-lunar-base/index.html
+    note: same distribution bundle
+  - qr_id: Q-M04
+    page: 36
+    mission: m04-human-vs-ai
+    kind: local
+    url: missions/m04-human-vs-ai/index.html
+    note: same distribution bundle
+  - qr_id: Q-M05
+    page: 44
+    mission: m05-cosmic-detective
+    kind: local
+    url: missions/m05-cosmic-detective/index.html
+    note: classified-file answer portal; observation ID AN-2050-017 consistent here
+  - qr_id: Q-M06
+    page: 8
+    mission: m06-predictions
+    kind: local
+    url: missions/m06-predictions/index.html
+    note: predictions archive; all data stays local in the browser
+  - qr_id: Q-WEB
+    page: 48
+    mission: portal
+    kind: portal
+    url: https://www.astro-not.example/
+    note: "PLACEHOLDER — .example domain; replace with real URL once brand + hosting approved"

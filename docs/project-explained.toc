@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}What was built, in one page}{2}{section.1}%
+\contentsline {section}{\numberline {2}Repository structure}{2}{section.2}%
+\contentsline {section}{\numberline {3}Toolchain decisions, honestly recorded}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Why not Scribus}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}WeasyPrint quirks discovered}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Fonts}{4}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}CMYK / PDF-X}{4}{subsection.3.4}%
+\contentsline {section}{\numberline {4}The design system}{4}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Tokens defined once}{4}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}The confidence-label system}{4}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Page types and spreads}{5}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Type system}{5}{subsection.4.4}%
+\contentsline {section}{\numberline {5}How a page gets built (the pipeline in detail)}{5}{section.5}%
+\contentsline {section}{\numberline {6}The QA gate: rules turned into code}{5}{section.6}%
+\contentsline {section}{\numberline {7}The missions: design and verification}{6}{section.7}%
+\contentsline {section}{\numberline {8}Editorial integrity: how each non-negotiable rule is met}{6}{section.8}%
+\contentsline {section}{\numberline {9}What remains open before artwork lock}{7}{section.9}%

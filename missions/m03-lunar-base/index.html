@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M03 — Lunar Base Designer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M03</span>
+<h1>Lunar base designer</h1>
+<p>100 fictional resource units. Four needs. One base that must survive.</p>
+<div class="banner">FICTIONAL SCENARIO — the constraints (14-day night, radiation) are real physics; the resource numbers and scoring are invented for play.</div>
+
+<div class="panel">
+  <div id="sliders"></div>
+  <p class="readout">Allocated: <span id="total">100</span> / 100 · Unspent: <span id="slack">0</span></p>
+  <button id="evaluate">Evaluate base</button>
+  <p id="verdict" class="verdict" aria-live="polite" hidden></p>
+  <table id="haz" hidden><thead><tr><th>Hazard</th><th>Status</th></tr></thead><tbody></tbody></table>
+</div>
+
+<h2>Strategies to try</h2>
+<ul>
+<li><strong>Max-science:</strong> push research high — watch the lunar night kill your base.</li>
+<li><strong>Max-survival:</strong> max power and shielding — morale collapses without research.</li>
+<li><strong>Balanced:</strong> the reference minimum (power 30, shielding 25, water 20, research 15, slack 10) passes all hazards.</li>
+</ul>
+<p>Notice your own learning curve: most people overbuild power on their second try. Systems engineers call that a lesson learned.</p>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M03. Keyboard: <kbd>Tab</kbd> + <kbd>←</kbd>/<kbd>→</kbd> on each slider. All data local.</footer>
+<script src="logic.js"></script><script>
+const defs = [["power","Power (survives the 14-day night)",30],
+              ["shielding","Shielding (radiation dose)",25],
+              ["water","Water & recycling",20],["research","Research (crew morale)",15]];
+const box = document.getElementById("sliders");
+defs.forEach(([k,label])=>{
+  const w = document.createElement("div");
+  w.innerHTML = `<label for="s-${k}">${label}: <span id="v-${k}" class="readout">25</span></label>
+    <input type="range" id="s-${k}" min="0" max="100" step="5" value="25">`;
+  box.appendChild(w);
+});
+function alloc(){ return { power:+power.value, shielding:+shielding.value,
+  water:+water.value, research:+research.value }; }
+function upd(){ ["power","shielding","water","research"].forEach(k=>
+  document.getElementById("v-"+k).textContent = document.getElementById("s-"+k).value);
+  const a = alloc(), sum = a.power+a.shielding+a.water+a.research;
+  document.getElementById("total").textContent = sum;
+  document.getElementById("slack").textContent = 100 - sum; }
+["power","shielding","water","research"].forEach(k=>
+  document.getElementById("s-"+k).addEventListener("input", upd));
+upd();
+document.getElementById("evaluate").addEventListener("click", ()=>{
+  const r = M03.score(alloc()), el = document.getElementById("verdict"),
+        tb = document.getElementById("haz").querySelector("tbody");
+  el.hidden = false; el.className = "verdict " + (r.viable?"good":"bad"); el.textContent = r.reason;
+  document.getElementById("haz").hidden = false; tb.innerHTML = "";
+  Object.entries(r.hazards||{}).forEach(([h,s])=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${h}</td><td>${s}</td>`; tb.appendChild(tr); });
+});
+</script></body></html>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" role="img" aria-label="Original illustration: Earth rising over a starfield with a distant galaxy">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101B33"/><stop offset="1" stop-color="#193F68"/>
+    </linearGradient>
+    <radialGradient id="earthg" cx="0.5" cy="0.25" r="1">
+      <stop offset="0" stop-color="#83DBF3"/><stop offset="0.45" stop-color="#4E9FD1"/>
+      <stop offset="1" stop-color="#193F68"/>
+    </radialGradient>
+    <radialGradient id="galg" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F3A86C" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#83DBF3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#sky)"/>
+  <g fill="#F4F6F3">
+    <circle cx="60" cy="52" r="1.6"/><circle cx="150" cy="130" r="1.1"/><circle cx="240" cy="40" r="1.8" opacity="0.9"/>
+    <circle cx="330" cy="96" r="1.2"/><circle cx="420" cy="30" r="1.5"/><circle cx="510" cy="70" r="1.1"/>
+    <circle cx="600" cy="120" r="1.7" opacity="0.85"/><circle cx="690" cy="46" r="1.3"/><circle cx="750" cy="150" r="1.5"/>
+    <circle cx="90" cy="210" r="1.3"/><circle cx="200" cy="250" r="1.1"/><circle cx="395" cy="205" r="1.4" opacity="0.8"/>
+    <circle cx="560" cy="230" r="1.2"/><circle cx="710" cy="255" r="1.4" opacity="0.9"/><circle cx="40" cy="300" r="1.4"/>
+    <circle cx="130" cy="330" r="1.1"/><circle cx="300" cy="290" r="1.2" opacity="0.75"/><circle cx="640" cy="320" r="1.2"/>
+  </g>
+  <g transform="rotate(-18 560 150)">
+    <ellipse cx="560" cy="150" rx="150" ry="42" fill="url(#galg)" opacity="0.55"/>
+    <ellipse cx="560" cy="150" rx="95" ry="24" fill="none" stroke="#83DBF3" stroke-width="2.4" opacity="0.6"/>
+    <ellipse cx="560" cy="150" rx="60" ry="13" fill="none" stroke="#F3A86C" stroke-width="2" opacity="0.7"/>
+    <ellipse cx="560" cy="150" rx="22" ry="7" fill="#F3A86C" opacity="0.85"/>
+  </g>
+  <circle cx="400" cy="700" r="300" fill="url(#earthg)"/>
+  <circle cx="400" cy="700" r="300" fill="none" stroke="#83DBF3" stroke-width="2.5" opacity="0.5"/>
+  <circle cx="400" cy="700" r="309" fill="none" stroke="#83DBF3" stroke-width="5" opacity="0.18"/>
+  <circle cx="400" cy="700" r="318" fill="none" stroke="#83DBF3" stroke-width="7" opacity="0.08"/>
+  <path d="M310 468 q40 -22 85 -8 q35 12 70 -2 q45 -16 90 6 l0 30 q-60 18 -120 4 q-55 -12 -125 -6 Z" fill="#193F68" opacity="0.55"/>
+  <path d="M330 512 q70 -14 150 2 q60 12 115 -4 l0 40 -265 0 Z" fill="#193F68" opacity="0.7"/>
+  <g transform="rotate(-24 620 404)">
+    <rect x="612" y="396" width="16" height="7" rx="1" fill="#F4F6F3" opacity="0.9"/>
+    <rect x="594" y="394" width="16" height="11" fill="#83DBF3" opacity="0.75"/>
+    <rect x="630" y="394" width="16" height="11" fill="#83DBF3" opacity="0.75"/>
+    <line x1="620" y1="403" x2="620" y2="410" stroke="#F4F6F3" stroke-width="1.4" opacity="0.8"/>
+    <circle cx="620" cy="412" r="1.6" fill="#F3A86C"/>
+  </g>
+  <path d="M60 90 q-26 12 0 24 q26 -12 0 -24" fill="#83DBF3" opacity="0.28"/>
+</svg>

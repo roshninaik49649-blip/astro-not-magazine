@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M02 — Signal or Noise?</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M02</span>
+<h1>Signal or noise?</h1>
+<p>A detector stream may hide a gravitational-wave-like chirp. Flag it — or dismiss it.</p>
+<div class="banner">SIMULATED — synthetic strain streams (seeded), not real detector data. Axis: arbitrary strain units vs sample index.</div>
+
+<div class="panel">
+  <button id="new">New stream</button>
+  <canvas id="plot" width="840" height="300" role="img"
+    aria-label="Detector stream plot. Decide whether a chirp-like signal is present."></canvas>
+  <label for="decision">Your call:</label>
+  <select id="decision"><option value="">— choose —</option>
+    <option value="signal">Signal present</option><option value="noise">Noise only</option></select>
+  <button id="reveal">Reveal &amp; score</button>
+  <p id="verdict" class="verdict" aria-live="polite" hidden></p>
+</div>
+
+<h2>Why multiple detectors matter</h2>
+<p>The first detection (GW150914) was confirmed because two independent detectors saw the same waveform milliseconds apart. One detector alone cannot tell a chirp from a glitch. The matched filter used here — correlating the stream against a template — is the real method, simplified.</p>
+
+<h2>False-alarm thinking</h2>
+<p>Run <em>New stream</em> twenty times with “noise only” streams: count how many look exciting to your eye. That false-alarm rate is the base rate intuition forgets — and why significance thresholds exist.</p>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M02. Keyboard: <kbd>Tab</kbd> to controls, <kbd>Enter</kbd> to activate. All data local.</footer>
+<script src="logic.js"></script><script>
+let current = null, truth = null;
+function show(){ truth = Math.random() < 0.5;
+  current = M02.stream(truth, Math.floor(Math.random()*1e9));
+  const cv = document.getElementById("plot"), c = cv.getContext("2d");
+  c.fillStyle = "#0B1226"; c.fillRect(0,0,cv.width,cv.height);
+  c.strokeStyle = "#2A3E63"; c.strokeRect(30,15,cv.width-40,cv.height-30);
+  c.strokeStyle = "#83DBF3"; c.beginPath();
+  current.forEach((v,i)=>{ const x = 30 + i/(current.length-1)*(cv.width-40), y = 150 - v*260;
+    i?c.lineTo(x,y):c.moveTo(x,y); }); c.stroke();
+  c.fillStyle = "#7E93B8"; c.font = "11px monospace";
+  c.fillText("strain (arb.) vs sample", 40, 30);
+  document.getElementById("verdict").hidden = true; }
+document.getElementById("new").addEventListener("click", show);
+document.getElementById("reveal").addEventListener("click", ()=>{
+  const d = document.getElementById("decision").value;
+  if(!d){ alert("Choose signal or noise first."); return; }
+  const s = M02.matchScore(current), real = s > M02.THRESHOLD;
+  const el = document.getElementById("verdict"); el.hidden = false;
+  const right = (d === "signal") === real;
+  el.className = "verdict " + (right ? "good" : "bad");
+  el.innerHTML = "Matched-filter peak correlation: <span class='readout'>" + s.toFixed(3) +
+    "</span> (threshold " + M02.THRESHOLD + ") — stream is <strong>" + (real?"SIGNAL":"NOISE") +
+    "</strong>. Your call was " + (right?"correct":"wrong") +
+    ". Real detections demand multi-detector coincidence — one stream is never enough."; });
+show();
+</script></body></html>

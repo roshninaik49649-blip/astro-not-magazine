@@ -1,0 +1,27 @@
+/* ASTRO-NOT missions shared styles — no external dependencies */
+:root{--navy:#101B33;--blue:#193F68;--cyan:#83DBF3;--paper:#F4F6F3;--sun:#F3A86C;}
+*{box-sizing:border-box}
+body{font-family:'Noto Sans',sans-serif;background:var(--navy);color:var(--paper);
+  margin:0;padding:2rem;max-width:880px;margin-inline:auto;line-height:1.45}
+h1{color:var(--cyan);font-size:1.6rem;margin:.2rem 0}
+h2{color:var(--cyan);font-size:1.1rem}
+a{color:var(--cyan)}
+.banner{background:#3A1216;color:#F5B7B1;border:1px solid #C0392B;font-weight:700;
+  font-size:.8rem;padding:.5rem .8rem;border-radius:6px;margin:.8rem 0}
+.tag{display:inline-block;background:var(--sun);color:#40260F;font-weight:700;
+  font-size:.8rem;padding:.2rem .8rem;border-radius:999px;margin:.3rem 0}
+.panel{background:var(--blue);border-radius:10px;padding:1rem 1.2rem;margin:1rem 0}
+canvas{background:#0B1226;border-radius:8px;width:100%;height:auto;display:block}
+input[type=range]{width:100%;accent-color:var(--sun)}
+button{background:var(--sun);color:#40260F;font-weight:700;border:none;border-radius:8px;
+  padding:.6rem 1.2rem;font-size:1rem;cursor:pointer;margin:.3rem .4rem .3rem 0}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.readout{font-family:'DejaVu Sans Mono',monospace;font-size:1.05rem;color:var(--cyan)}
+.verdict{font-weight:700;padding:.6rem .8rem;border-radius:8px;margin-top:.6rem}
+.good{background:#123B24;color:#A7F3C6}.bad{background:#4A1520;color:#F5B7B1}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border-bottom:1px solid #2A3E63;padding:.4rem .6rem;text-align:left}
+th{color:var(--cyan)}
+kbd{background:var(--blue);border:1px solid #2A3E63;border-radius:4px;padding:0 .35em}
+footer{font-size:.8rem;color:#7E93B8;margin-top:2rem;border-top:1px solid #2A3E63;padding-top:.6rem}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}

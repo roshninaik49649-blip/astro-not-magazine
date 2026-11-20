@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" role="img" aria-label="Original illustration: Earth's limb at night with human lights, stars and orbital arcs above">
+  <defs>
+    <linearGradient id="bsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101B33"/><stop offset="1" stop-color="#193F68"/>
+    </linearGradient>
+    <radialGradient id="bearth" cx="0.5" cy="0.4" r="0.9">
+      <stop offset="0" stop-color="#1B2C4F"/><stop offset="0.75" stop-color="#14213D"/>
+      <stop offset="1" stop-color="#0D1628"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bsky)"/>
+  <g fill="#F4F6F3">
+    <circle cx="70" cy="46" r="1.5"/><circle cx="190" cy="90" r="1.1"/><circle cx="310" cy="38" r="1.6" opacity="0.9"/>
+    <circle cx="450" cy="70" r="1.2"/><circle cx="570" cy="34" r="1.5"/><circle cx="680" cy="86" r="1.3"/>
+    <circle cx="740" cy="160" r="1.4" opacity="0.8"/><circle cx="120" cy="150" r="1.2"/><circle cx="260" cy="130" r="1.1"/>
+    <circle cx="520" cy="130" r="1.3" opacity="0.75"/><circle cx="650" cy="190" r="1.1"/>
+  </g>
+  <path d="M960 560 a560 560 0 0 1 -1120 0" fill="none" stroke="#83DBF3" stroke-width="2" opacity="0.35"/>
+  <path d="M960 560 a600 600 0 0 1 -1200 0" fill="none" stroke="#83DBF3" stroke-width="1.4" opacity="0.2"/>
+  <path d="M960 560 a520 520 0 0 1 -1040 0" fill="none" stroke="#F3A86C" stroke-width="1.4" opacity="0.25"/>
+  <g transform="rotate(52 640 150)">
+    <rect x="634" y="146" width="12" height="6" rx="1" fill="#F4F6F3" opacity="0.9"/>
+    <rect x="620" y="144" width="12" height="9" fill="#83DBF3" opacity="0.7"/>
+    <rect x="648" y="144" width="12" height="9" fill="#83DBF3" opacity="0.7"/>
+  </g>
+  <circle cx="250" cy="210" r="3" fill="#F4F6F3" opacity="0.9"/>
+  <circle cx="400" cy="760" r="460" fill="url(#bearth)"/>
+  <path d="M400 300 a460 460 0 0 1 320 80" fill="none" stroke="#83DBF3" stroke-width="4" opacity="0.6"/>
+  <path d="M400 300 a460 460 0 0 1 320 80" fill="none" stroke="#83DBF3" stroke-width="10" opacity="0.15"/>
+  <g fill="#F3A86C">
+    <circle cx="180" cy="352" r="2.2"/><circle cx="220" cy="344" r="1.8"/><circle cx="258" cy="350" r="2"/>
+    <circle cx="300" cy="338" r="1.7"/><circle cx="345" cy="346" r="2.1"/><circle cx="388" cy="334" r="1.8"/>
+    <circle cx="430" cy="342" r="2"/><circle cx="470" cy="330" r="1.7"/><circle cx="512" cy="338" r="2"/>
+    <circle cx="552" cy="344" r="1.8"/><circle cx="596" cy="332" r="1.6"/><circle cx="636" cy="340" r="1.9"/>
+    <circle cx="410" cy="368" r="1.6" opacity="0.85"/><circle cx="330" cy="372" r="1.5" opacity="0.8"/>
+    <circle cx="500" cy="374" r="1.5" opacity="0.8"/><circle cx="240" cy="366" r="1.4" opacity="0.75"/>
+    <circle cx="580" cy="370" r="1.4" opacity="0.7"/>
+  </g>
+</svg>

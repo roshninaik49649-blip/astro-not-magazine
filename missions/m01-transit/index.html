@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M01 — Catch a Transiting Planet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M01</span>
+<h1>Catch a transiting planet</h1>
+<p>Estimate the planet's radius from the dip it makes in starlight.</p>
+<div class="banner">SIMULATED — synthetic light curve (fixed seed 20500116), not a real observation. Flux is normalised; time is in days.</div>
+
+<h2>1 · The reference light curve</h2>
+<div class="panel"><canvas id="lc" width="840" height="300" role="img"
+  aria-label="Simulated light curve: normalised flux over three days showing a transit dip of 1.56 percent depth at day 1.4."></canvas>
+<p class="readout">Reference transit depth: 1.56 % (dip minimum)</p></div>
+
+<h2>2 · Your turn: drag the planet radius</h2>
+<div class="panel">
+  <label for="rprs">Planet radius / star radius (R_p / R_s): <span id="rvals" class="readout">0.125</span></label>
+  <input type="range" id="rprs" min="0.02" max="0.30" step="0.005" value="0.125"
+    aria-describedby="rhelp"/>
+  <p id="rhelp" class="visually-hidden">Slider sets the radius ratio; the model curve updates. Use arrow keys for fine steps.</p>
+  <canvas id="fit" width="840" height="300" role="img"
+    aria-label="Your model curve overlaid on the simulated data. Match the dip depth to estimate the radius ratio."></canvas>
+  <p class="readout">Model depth = (R_p/R_s)² = <span id="depth">1.56 %</span></p>
+  <button id="check">Check my estimate</button>
+  <p id="verdict" class="verdict" aria-live="polite" hidden></p>
+</div>
+
+<h2>3 · The algebra</h2>
+<p>depth ≈ (R_p / R_s)². So R_p / R_s = √depth = √0.0156 ≈ <strong>0.125</strong>.
+For a Sun-sized star (696,000 km), that is a planet of ≈ 87,000 km radius — a sub-Neptune.</p>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M01. Keyboard: <kbd>Tab</kbd> to the slider, <kbd>←</kbd>/<kbd>→</kbd> to adjust. All data local; nothing uploaded.</footer>
+<script src="logic.js"></script><script>
+const data = M01.lightCurve(M01.ANSWER_RP_RS, 0.0009, M01.SEED);
+function draw(cv, series, model){ // simple polyline plot
+  const c = cv.getContext("2d"), W = cv.width, H = cv.height;
+  c.clearRect(0,0,W,H); c.fillStyle = "#0B1226"; c.fillRect(0,0,W,H);
+  const y0 = H-30, y1 = 20, x0 = 40, x1 = W-10;
+  const ymin = 0.975, ymax = 1.003;
+  const X = t => x0 + (t/3)*(x1-x0), Y = f => y0 - (f-ymin)/(ymax-ymin)*(y0-y1);
+  c.strokeStyle = "#2A3E63"; c.strokeRect(x0,y1,x1-x0,y0-y1);
+  c.fillStyle = "#7E93B8"; c.font = "11px monospace";
+  c.fillText("flux 1.00", 4, Y(1)+4); c.fillText("0.98", 8, Y(0.98)+4);
+  c.fillText("t=0", x0, H-8); c.fillText("t=3 days", x1-60, H-8);
+  c.strokeStyle = "#83DBF3"; c.lineWidth = 1;
+  c.beginPath(); series.t.forEach((t,i)=>{ i?c.lineTo(X(t),Y(series.f[i])):c.moveTo(X(t),Y(series.f[i])); }); c.stroke();
+  if(model){ c.strokeStyle = "#F3A86C"; c.lineWidth = 2; c.beginPath();
+    series.t.forEach((t,i)=>{ i?c.lineTo(X(t),Y(1-M01.depth(model)*Math.max(0,1-((t-1.4)/0.09)**2))):c.moveTo(X(t),Y(1-M01.depth(model)*Math.max(0,1-((t-1.4)/0.09)**2))); }); c.stroke(); }
+}
+draw(document.getElementById("lc"), data, null);
+const slider = document.getElementById("rprs");
+function update(){ const v = parseFloat(slider.value);
+  document.getElementById("rvals").textContent = v.toFixed(3);
+  document.getElementById("depth").textContent = (M01.depth(v)*100).toFixed(2)+" %";
+  draw(document.getElementById("fit"), data, v); }
+slider.addEventListener("input", update); update();
+document.getElementById("check").addEventListener("click", ()=>{
+  const v = parseFloat(slider.value), ok = M01.checkAnswer(v);
+  const el = document.getElementById("verdict"); el.hidden = false;
+  el.className = "verdict " + (ok ? "good" : "bad");
+  el.textContent = ok ? "Correct — your estimate is within 15 % of √0.0156 ≈ 0.125. This is how thousands of confirmed exoplanets were measured."
+                      : "Not yet — compare your dip depth to 1.56 %. Hint: radius ratio = √depth.";
+});
+</script></body></html>

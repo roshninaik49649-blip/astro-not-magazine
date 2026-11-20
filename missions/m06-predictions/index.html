@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M06 — Your Prediction Log</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M06</span>
+<h1>Your prediction log</h1>
+<p>Five forecasts. Confidence on each. Name what would falsify it — or it isn't a prediction.</p>
+<div class="banner">PRIVACY — everything stays in your browser's local storage. Nothing is uploaded; clearing browser data clears your log.</div>
+
+<div class="panel"><div id="prompts"></div>
+  <button id="save">Save log</button>
+  <button id="export">Export as JSON</button>
+  <button id="clear">Clear saved log</button>
+  <p id="status" class="verdict" aria-live="polite" hidden></p>
+</div>
+
+<h2>Falsification prompts</h2>
+<p>For each prediction, answer: <em>what observation, by 2050, would prove me wrong?</em>
+If you cannot name one, demote your confidence — untestable predictions aren't predictions.</p>
+<p>Editorial anchor for prompt 5: this magazine argues the <strong>Universe</strong> will not change drastically by 2050, while our <strong>understanding</strong> of it will. Score our claim too — and hold us to it.</p>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M06. Keyboard: <kbd>Tab</kbd> through fields. Storage key: astronot-m06-predictions.</footer>
+<script src="logic.js"></script><script>
+const box = document.getElementById("prompts");
+function render(){
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(M06.STORAGE_KEY) || "null") || []; } catch(e){}
+  if (!M06.validate(saved)) saved = M06.blank();
+  box.innerHTML = "";
+  M06.PROMPTS.forEach((p,i)=>{
+    const d = document.createElement("div"); d.className = "panel";
+    d.innerHTML = `<h2>Prediction ${i+1}</h2><p>${p}</p>
+      <label for="t${i}">Your prediction</label>
+      <input id="t${i}" type="text" style="width:100%" value="${(saved[i].text||"").replace(/"/g,"&quot;")}"/>
+      <label for="c${i}">Confidence: <span id="cv${i}" class="readout">${saved[i].confidence}</span> / 100</label>
+      <input id="c${i}" type="range" min="0" max="100" step="5" value="${saved[i].confidence}"/>
+      <label for="f${i}">What would falsify it?</label>
+      <input id="f${i}" type="text" style="width:100%" value="${(saved[i].falsifier||"").replace(/"/g,"&quot;")}"/>`;
+    box.appendChild(d);
+  });
+  M06.PROMPTS.forEach((p,i)=>{
+    document.getElementById("c"+i).addEventListener("input", e=>
+      document.getElementById("cv"+i).textContent = e.target.value);
+  });
+}
+function collect(){ return M06.PROMPTS.map((p,i)=>({
+  index:i, text:document.getElementById("t"+i).value,
+  confidence:+document.getElementById("c"+i).value,
+  falsifier:document.getElementById("f"+i).value })); }
+document.getElementById("save").addEventListener("click", ()=>{
+  localStorage.setItem(M06.STORAGE_KEY, JSON.stringify(collect()));
+  const s = document.getElementById("status"); s.hidden = false;
+  s.className = "verdict good"; s.textContent = "Saved locally (" + M06.STORAGE_KEY + ")."; });
+document.getElementById("export").addEventListener("click", ()=>{
+  const blob = new Blob([JSON.stringify(collect(),null,2)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "astronot-m06-predictions.json"; a.click(); URL.revokeObjectURL(a.href); });
+document.getElementById("clear").addEventListener("click", ()=>{
+  localStorage.removeItem(M06.STORAGE_KEY); render();
+  const s = document.getElementById("status"); s.hidden = false;
+  s.className = "verdict bad"; s.textContent = "Local log cleared."; });
+render();
+</script></body></html>

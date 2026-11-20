@@ -1,0 +1,167 @@
+# REFERENCE REGISTER — every factual claim in the magazine must map to one ID here.
+# Fields: author/organisation, year/date, title, locator (URL/DOI/arXiv), page-use notes.
+# locator_verified: true  = locator transcribed from memory of the published record by the
+#                           production team and should still be re-checked before artwork lock;
+#                         false/[NEEDS VERIFICATION] = do not rely on it yet.
+# No DOIs or URLs have been invented. Anything uncertain is tagged.
+
+refs:
+  - id: R01
+    org: NASA Exoplanet Archive (Caltech/IPAC)
+    date: accessed 2026-11
+    title: Confirmed exoplanet archive statistics
+    locator: https://exoplanetarchive.ipac.caltech.edu
+    locator_verified: true
+    page_use: exoplanet counts, transit method statistics (pages 10, 13, 16)
+  - id: R02
+    org: NASA
+    date: accessed 2026-11
+    title: James Webb Space Telescope mission overview
+    locator: https://science.nasa.gov/mission/webb/
+    locator_verified: true
+    page_use: JWST capability context (pages 10, 12, 14)
+  - id: R03
+    org: LIGO Scientific Collaboration (Abbott et al.)
+    date: 2016
+    title: Observation of Gravitational Waves from a Binary Black Hole Coalescence
+    locator: Phys. Rev. Lett. 116, 061102; DOI 10.1103/PhysRevLett.116.061102
+    locator_verified: true
+    page_use: first GW detection (pages 19, 20)
+  - id: R04
+    org: Event Horizon Telescope Collaboration (EHT)
+    date: 2019
+    title: First M87 Event Horizon Telescope Results I
+    locator: ApJL 875, L1; DOI 10.3847/2041-8213/ab0ec7
+    locator_verified: true
+    page_use: black hole imaging (pages 17, 18)
+  - id: R05
+    org: Planck Collaboration (Aghanim et al.)
+    date: 2020
+    title: Planck 2018 results. VI. Cosmological parameters
+    locator: A&A 641, A6; DOI 10.1051/0004-6361/201833910
+    locator_verified: true
+    page_use: cosmological parameters, H0 early-universe value (pages 22, 23)
+  - id: R06
+    org: Riess, A. G. et al. (SH0ES team)
+    date: 2022
+    title: A Comprehensive Measurement of the Local Value of H0
+    locator: arXiv:2112.04510 (ApJL 934, L7 — journal locator [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: Hubble tension distance-ladder side (page 23)
+  - id: R07
+    org: Rubin, V. C. & Ford, W. K.
+    date: 1970
+    title: Rotation of the Andromeda Nebula from a Spectroscopic Survey of Emission Regions
+    locator: ApJ 159, 379 (DOI [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: galaxy rotation curves / dark matter (page 21)
+  - id: R08
+    org: Riess, A. G. et al. 1998; Perlmutter, S. et al. 1999 (Supernova Cosmology Project)
+    date: 1998-1999
+    title: Observational Evidence from Supernovae for an Accelerating Universe / Measurements of Omega and Lambda from 42 High-Redshift Supernovae
+    locator: AJ 116, 1009 (1998); ApJ 517, 565 (1999) (DOIs [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: accelerating universe discovery (page 22)
+  - id: R09
+    org: ISRO (Indian Space Research Organisation)
+    date: accessed 2026-11
+    title: Official ISRO mission pages — Chandrayaan-3, Aditya-L1
+    locator: https://www.isro.gov.in
+    locator_verified: true
+    page_use: verified current Indian capabilities (page 29)
+  - id: R10
+    org: NASA
+    date: accessed 2026-11
+    title: Artemis program overview
+    locator: https://www.nasa.gov/artemis/
+    locator_verified: true
+    page_use: lunar return plans (pages 25, 26)
+  - id: R11
+    org: ESA
+    date: accessed 2026-11
+    title: Euclid mission (dark universe)
+    locator: https://www.esa.int/Science_Exploration/Space_Science/Euclid
+    locator_verified: true
+    page_use: dark energy / dark matter surveys (pages 21, 22, 33)
+  - id: R12
+    org: NSF-DOE Rubin Observatory (Vera C. Rubin Observatory)
+    date: accessed 2026-11
+    title: Legacy Survey of Space and Time (LSST) overview
+    locator: https://rubinobservatory.org
+    locator_verified: true
+    page_use: survey astronomy, data rates (pages 33, 37)
+  - id: R13
+    org: NIST
+    date: accessed 2026-11
+    title: Optical atomic clocks research
+    locator: https://www.nist.gov (specific record [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: quantum clocks (page 35)
+  - id: R14
+    org: ESA Space Debris Office
+    date: accessed 2026-11
+    title: Space environment statistics
+    locator: https://www.esa.int/Space_Safety/Space_Debris
+    locator_verified: true
+    page_use: sustainability, debris counts (pages 28, 32)
+  - id: R15
+    org: Hassler, D. M. et al. (MSL RAD instrument)
+    date: 2014
+    title: The Radiation Environment on the Surface of Mars
+    locator: Science 343, 786 (DOI [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: Mars radiation doses (page 27)
+  - id: R16
+    org: NASA JPL
+    date: accessed 2026-11
+    title: Mars 2020 / Perseverance rover mission
+    locator: https://mars.nasa.gov/mars2020/
+    locator_verified: true
+    page_use: Mars operations reality-check (page 27)
+  - id: R17
+    org: LIGO/Virgo/KAGRA collaboration pages
+    date: accessed 2026-11
+    title: Gravitational-wave observing runs and detections
+    locator: https://www.ligo.org
+    locator_verified: true
+    page_use: GW catalogues, detection significance (pages 19, 20)
+  - id: R18
+    org: IAU
+    date: accessed 2026-11
+    title: Naming of astronomical objects / exoplanet naming
+    locator: https://www.iau.org
+    locator_verified: true
+    page_use: exoplanet naming, scientific process (pages 13, 24)
+  - id: R19
+    org: Breakthrough Initiatives
+    date: accessed 2026-11
+    title: Breakthrough Listen search for technosignatures
+    locator: https://breakthroughinitiatives.org
+    locator_verified: true
+    page_use: SETI / technosignature searches (pages 14, 33)
+  - id: R20
+    org: ESA / NASA Hubble Space Telescope
+    date: accessed 2026-11
+    title: History of unexpected astronomical discoveries
+    locator: https://esahubble.org (specific compilation [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: unknown unknowns (page 39)
+  - id: R21
+    org: NASA
+    date: accessed 2026-11
+    title: NASA budget request documents
+    locator: https://www.nasa.gov (specific FY document [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: exploration budgets (page 32)
+  - id: R22
+    org: ISRO
+    date: accessed 2026-11
+    title: Gaganyaan human spaceflight programme
+    locator: https://www.isro.gov.in/Gaganyaan (page path [NEEDS VERIFICATION])
+    locator_verified: false
+    page_use: Indian future ambitions (page 29)
+
+notes:
+  - Any manuscript claim without a matching ref ID in its YAML front matter fails QA.
+  - Unverifiable facts are written as [NEEDS VERIFICATION] in body text; QA counts them.
+  - No URLs or DOIs have been invented; uncertain locators are tagged above.

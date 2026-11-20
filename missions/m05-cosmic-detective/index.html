@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M05 — Cosmic Detective: Case AN-2050-017</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M05</span>
+<h1>Cosmic detective — case AN-2050-017</h1>
+<p>A fictional case file. Weigh the evidence, pick a hypothesis, meet the classified rationale.</p>
+<div class="banner">FICTIONAL SCENARIO &amp; SIMULATED DATA — case AN-2050-017 is invented for training. No real planet, telescope or life claim is involved.</div>
+
+<div class="panel">
+  <h2>Evidence board</h2>
+  <ul>
+    <li><strong>Spectra (simulated):</strong> night 1 shows dips near 1.4 and 2.7 µm plus a small 3.3 µm feature; night 7 repeats them and adds a narrow extra feature near 4.6 µm.</li>
+    <li><strong>Log:</strong> 2047-03-11 instrument A (night 1) → recalibration 09:47 UTC; 2047-03-18 instrument B (night 7), elevated thermal noise logged 01:30 UTC.</li>
+    <li><strong>Models:</strong> H1 biological needs a seasonal process; H2 photochemical fits with known abiotic chemistry; H3 instrumental explains night 7 via thermal correlation.</li>
+  </ul>
+</div>
+
+<div class="panel">
+  <h2>Your verdict</h2>
+  <label for="pick">Which hypothesis do you accept?</label>
+  <select id="pick"><option value="">— choose —</option>
+    <option value="H1">H1 — Biological</option><option value="H2">H2 — Photochemical</option>
+    <option value="H3">H3 — Instrumental</option></select>
+  <button id="open">Open the classified file</button>
+  <p id="verdict" class="verdict" aria-live="polite" hidden></p>
+</div>
+
+<div class="panel">
+  <h2>Discriminators an analyst would use</h2>
+  <ul><li>Re-observe with instrument A: H3 predicts the feature vanishes.</li>
+  <li>Track transit geometry: H2's chemistry follows the terminator.</li>
+  <li>Independent reduction: artefact hypotheses usually die here.</li></ul>
+</div>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M05. Observation ID AN-2050-017 is consistent with magazine pages 12 and 41–44. Keyboard: <kbd>Tab</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd>. All data local.</footer>
+<script src="logic.js"></script><script>
+document.getElementById("open").addEventListener("click", ()=>{
+  const p = document.getElementById("pick").value;
+  if(!p){ alert("Choose a hypothesis first."); return; }
+  const el = document.getElementById("verdict"); el.hidden = false;
+  const right = M05.checkAnswer(p);
+  el.className = "verdict " + (right ? "good" : "bad");
+  el.innerHTML = (right ? "<strong>Correct — the fictional case resolves to H3 (instrumental).</strong><br>"
+                        : "<strong>The fictional case resolves to H3 (instrumental), not " + p + ".</strong><br>")
+    + "Rationale:<ul>" + M05.RATIONALE.map(r=>"<li>"+r+"</li>").join("") + "</ul>"
+    + "Most dramatic discoveries fail exactly this test — that is science working."; });
+</script></body></html>

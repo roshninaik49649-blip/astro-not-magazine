@@ -1,0 +1,13 @@
+:root {
+  --midnight-navy: #101B33;
+  --deep-blue: #193F68;
+  --icy-cyan: #83DBF3;
+  --paper: #F4F6F3;
+  --solar-accent: #F3A86C;
+  --conf-established-science: #2E7D4F;
+  --conf-active-research: #193F68;
+  --conf-plausible-projection: #B0722A;
+  --conf-fictional-scenario: #8A4FA3;
+  --font-sans: 'Noto Sans', 'DejaVu Sans', sans-serif;
+  --font-mono: 'DejaVu Sans Mono', monospace;
+}

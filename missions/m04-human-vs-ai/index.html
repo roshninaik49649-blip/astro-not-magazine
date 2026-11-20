@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ASTRO-NOT M04 — Human vs AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="../style.css"/></head>
+<body>
+<span class="tag">MISSION M04</span>
+<h1>Human vs AI: spot the artefacts</h1>
+<p>12 flagged detections. Some are real transients, some are artefacts. The pipeline's AI has opinions — do you agree?</p>
+<div class="banner">SIMULATED — synthetic detections; the “truth” is defined by the generator. In real surveys, truth comes from follow-up observation.</div>
+
+<div class="panel">
+  <table id="grid"><thead><tr><th>ID</th><th>Light-curve / image signature</th><th>AI says</th><th>You say</th></tr></thead>
+  <tbody></tbody></table>
+  <button id="score">Score my round</button>
+  <p id="verdict" class="verdict" aria-live="polite" hidden></p>
+</div>
+
+<h2>The debrief pattern</h2>
+<p>The simulated classifier over-trusts sharp, point-like shapes (cosmic-ray hits and spikes) and occasionally rejects genuinely irregular variability. Machines bring coverage and consistency; humans bring context and the “wait, that's odd” moment.</p>
+<details><summary>What the artefact kinds look like</summary>
+<ul><li><strong>Cosmic-ray hit:</strong> one sharp pixel/epoch only.</li>
+<li><strong>Bad column:</strong> vertical streak, always same pixel column.</li>
+<li><strong>Diffraction spike:</strong> streaks through a bright star at fixed angles.</li>
+<li><strong>Saturated bleed:</strong> flat bright square around a bright source.</li></ul></details>
+
+<footer>ASTRO-NOT · THE 2050 PROJECT — Mission M04. Keyboard: <kbd>Tab</kbd> between selects, <kbd>↑</kbd>/<kbd>↓</kbd> to choose. All data local.</footer>
+<script src="logic.js"></script><script>
+const tb = document.getElementById("grid").querySelector("tbody");
+M04.CASES.forEach((c,i)=>{
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td>${c.id}</td><td>${c.curve}</td><td>${c.ai}</td>
+    <td><select id="u${i}" aria-label="Your classification for ${c.id}">
+      <option value="">—</option><option value="transient">transient</option>
+      <option value="artefact">artefact</option><option value="uncertain">uncertain</option></select></td>`;
+  tb.appendChild(tr);
+});
+document.getElementById("score").addEventListener("click", ()=>{
+  const ans = M04.CASES.map((c,i)=>document.getElementById("u"+i).value);
+  if(ans.some(v=>!v)){ alert("Classify all 12 first (uncertain is allowed)."); return; }
+  const r = M04.scoreUser(ans), ai = M04.aiAccuracy();
+  const el = document.getElementById("verdict"); el.hidden = false;
+  el.className = "verdict " + (r.accuracy >= ai ? "good" : "bad");
+  el.innerHTML = `You: <span class="readout">${r.right}/12</span> (${(r.accuracy*100).toFixed(0)} %) — simulated AI: ${(ai*100).toFixed(0)} %.
+    The AI's documented weaknesses: cosmic-ray hits (D-02, D-09), diffraction spikes (D-06), and the irregular transient D-08.
+    Where you beat the machine, ask why; where it beat you, that's statistics working.`; });
+</script></body></html>

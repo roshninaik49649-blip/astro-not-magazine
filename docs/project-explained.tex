@@ -1,0 +1,414 @@
+% ASTRO-NOT — THE 2050 PROJECT: production explainer
+% Compile: pdflatex project-explained.tex (run twice for TOC/refs)
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\hypersetup{colorlinks=true, linkcolor=linknavy, urlcolor=linkcyan,
+  pdftitle={ASTRO-NOT -- The 2050 Project: How This Magazine Was Built},
+  pdfauthor={ASTRO-NOT production team}}
+
+\definecolor{navy}{HTML}{101B33}
+\definecolor{deepblue}{HTML}{193F68}
+\definecolor{icycyan}{HTML}{83DBF3}
+\definecolor{paper}{HTML}{F4F6F3}
+\definecolor{sun}{HTML}{F3A86C}
+\definecolor{linknavy}{HTML}{193F68}
+\definecolor{linkcyan}{HTML}{1B6C8F}
+\definecolor{codebg}{HTML}{F4F6F3}
+
+\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{deepblue}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{deepblue}}{\thesubsubsection}{0.6em}{}
+
+\lstset{basicstyle=\ttfamily\small, backgroundcolor=\color{codebg},
+  frame=single, rulecolor=\color{deepblue}, framerule=0.4pt,
+  breaklines=true, columns=fullflexible, showstringspaces=false,
+  keywordstyle=\bfseries, commentstyle=\itshape\color{deepblue},
+  literate={→}{{$\rightarrow$}}1}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{deepblue}ASTRO-NOT $\cdot$ THE 2050 PROJECT}
+\fancyhead[R]{\small\color{deepblue}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\badge}[1]{\textcolor{deepblue}{\textbf{[#1]}}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{18mm}
+{\color{deepblue}\Large THE 2050 PROJECT}\\[4mm]
+{\color{navy}\Huge\bfseries ASTRO-NOT}\\[6mm]
+{\color{navy}\LARGE\bfseries How This 48-Page Magazine Was Built}\\[8mm]
+{\color{deepblue}\large A production explainer: pipeline, design system,\\ editorial rules, QA and how to rebuild everything}\\[14mm]
+{\color{sun}\rule{80mm}{1.2pt}}\\[10mm]
+\begin{minipage}{0.8\textwidth}\centering\color{deepblue}
+\textbf{Thesis of the magazine it documents:} the Universe will \emph{not}
+change drastically by 2050 --- our instruments, discoveries and presence in
+space may transform our \emph{understanding} of it. Every claim is labelled,
+every simulation marked, every source registered.
+\end{minipage}\\[14mm]
+{\color{sun}\rule{80mm}{1.2pt}}
+\vfill
+{\small\color{deepblue}astro-not-magazine/docs/project-explained.tex $\cdot$ rebuilt by \code{build.py} $\cdot$ today's date on the cover of the magazine itself}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==================================================================
+\section{What was built, in one page}
+
+\textbf{ASTRO-NOT / THE 2050 PROJECT} is a 48-page, full-colour A4 science
+magazine arguing a disciplined editorial thesis: on 24-year timescales the
+Universe itself is stable --- its laws, its expansion, its inventory --- while
+our \emph{picture} of it, our instruments, and humanity's footprint in space
+can change substantially. The magazine exists in two editions, produced
+entirely by scripts in this repository:
+
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+  \item \textbf{Print edition} --- \code{output/astronot-print.pdf}: A4 trim
+        $210\times297$~mm with a 3~mm bleed on every edge (page box
+        $216\times303$~mm), 15~mm safe margins, three-column flexible grid,
+        alternating dark/light spreads, embedded open-licensed fonts.
+  \item \textbf{Digital edition} --- \code{output/astronot-digital.pdf}: plain
+        A4, tagged PDF (PDF/UA-1 attempt via WeasyPrint), alt text on every
+        figure, clickable internal links from page references to page anchors,
+        page numbers on every sheet.
+\end{itemize}
+
+Supporting both editions:
+\begin{itemize}[leftmargin=6mm,itemsep=1pt]
+  \item \textbf{Six interactive missions} (browser activities, M01--M06) in
+        \code{missions/}, each with a verified answer key and automated tests.
+  \item \textbf{Eleven original seeded figures} in \code{figures/out/} ---
+        reproducible by a fixed random seed, each simulated one carrying a
+        visible \textbf{SIMULATED} banner, axis labels, units and uncertainties.
+  \item \textbf{Seven QR codes} generated from one \code{qr/links.yaml} register.
+  \item \textbf{Three registers} that make the honesty auditable: references
+        (\code{registers/references.yaml}), assets/licences
+        (\code{assets/asset-register.yaml}) and links (\code{qr/links.yaml}).
+  \item \textbf{A QA gate} (\code{qa/qa\_check.py}) that enforces the
+        non-negotiable editorial rules programmatically.
+\end{itemize}
+
+\subsection*{The one-command rebuild}
+\begin{lstlisting}
+.venv/bin/python build.py      # or: make all
+# stages: tokens -> figures -> QR -> mission tests
+#         -> layout (print+digital PDFs) -> CMYK attempt -> QA gate
+\end{lstlisting}
+First-time setup (PEP 668 blocks system pip on this machine, so a virtual
+environment is used):
+\begin{lstlisting}
+python3 -m venv .venv
+.venv/bin/pip install matplotlib weasyprint pyyaml segno markdown
+\end{lstlisting}
+
+% ==================================================================
+\section{Repository structure}
+
+\begin{longtable}{p{44mm}p{102mm}}
+\textbf{Path} & \textbf{What it is / how it works}\\
+\endhead
+\code{manuscript/} & 48 Markdown files, one per page. Each begins with YAML
+front matter: \code{page}, \code{headline}, \code{section}, \code{type}
+(cover / opener / article / infographic / mission / reference), \code{dark}
+(bool, drives the dark-or-light spread), \code{confidence} (labels used),
+\code{references} (IDs it must cite), and for figure pages: \code{figure},
+\code{figure\_alt}, \code{simulated}, \code{obs\_id}.\\
+\code{design/tokens.py} & Single source of truth. Defines the palette
+(\#101B33 navy, \#193F68 deep blue, \#83DBF3 cyan, \#F4F6F3 paper, \#F3A86C
+solar accent), the four confidence labels with their icons and colours, page
+geometry (trim, bleed, margins, columns, type sizes) and fonts. Running it
+writes \code{tokens.css} and \code{tokens.json} --- nothing downstream may
+hardcode a colour.\\
+\code{figures/make\_figures.py} & Matplotlib, seeded RNG
+(\code{numpy.random.default\_rng(20500117)}) so every run is byte-identical.
+Writes SVG. Simulated plots get the red \textbf{SIMULATED} banner
+(\code{save(fig, name)} vs \code{save(fig, name, simulated=False)} for
+non-simulated charts such as the clock-precision timeline).\\
+\code{qr/links.yaml + make\_qr.py} & All seven QR destinations declared once;
+\code{segno} writes SVGs into \code{qr/out/}. Local mission QRs point at
+relative paths; the portal QR is an explicit \code{.example} placeholder
+domain --- deliberately not an invented URL.\\
+\code{missions/} & Six self-contained HTML activities + shared
+\code{style.css}. Each has a pure-logic \code{logic.js} (no DOM access, so
+\code{node} can execute it) and an \code{index.html} that draws on canvas.
+\code{missions/tests/test\_missions.py} runs the logic under Node and checks
+HTML requirements.\\
+\code{layout/} & \code{build\_layout.py}: Markdown $\rightarrow$ HTML
+(python-markdown) $\rightarrow$ inline CSS $\rightarrow$ WeasyPrint PDFs.
+\code{style.css} + \code{style-print.css}/\code{style-digital.css}.
+\code{cmyk\_attempt.py}: Ghostscript colour-conversion attempt.\\
+\code{registers/references.yaml} & R01--R22: organisation, date, title,
+locator, \emph{locator\_verified} flag and page-use notes. Nothing was
+invented; uncertain DOIs are tagged \texttt{[NEEDS VERIFICATION]}.\\
+\code{assets/asset-register.yaml} & Every asset with its licence and status.
+Photographs are deliberately absent: any NASA/ESA/ESO candidate needs
+individual licence review (including commercial print rights) before
+download, so original vector art is used meanwhile.\\
+\code{qa/} & \code{qa\_check.py} (the rule gate) and \code{link\_checker.py}
+(QR targets + internal anchors).\\
+\code{build.py, Makefile} & Orchestrator; exits non-zero at the first failing
+stage, so a red build means a real rule was violated.\\
+\code{output/} & The two PDFs, HTML intermediates, and the CMYK proof attempt.\\
+\end{longtable}
+
+% ==================================================================
+\section{Toolchain decisions, honestly recorded}
+
+\subsection{Why not Scribus}
+The blueprint prescribed Scribus headless (\code{scribus -g -py}). Scribus was
+not installed, and headless Scribus scripting is fragile and poorly documented
+for automated builds. \textbf{Fallback chosen: HTML/CSS $\rightarrow$
+WeasyPrint.} Recorded in \code{BUILD\_LOG.md}. This route gives exact CSS
+control over page boxes, bleeds, column grids and dark/light backgrounds, and
+runs in $\sim$14~s for both editions.
+
+\subsection{WeasyPrint quirks discovered}
+\begin{enumerate}[leftmargin=6mm,itemsep=1pt]
+  \item \code{@page \{ size: 216mm 303mm \}} passed via the \code{css=}
+        parameter was silently ignored; the same rule inlined in a
+        \code{<style>} element works. All CSS is now inlined.
+  \item Page numbers were NOT taken from \code{@page} margin boxes
+        (\code{counter(page)} lives only there, and margin boxes fight with
+        full-bleed backgrounds). Instead every page carries a \emph{static}
+        footer ``Page NN / 48'' generated from its front matter --- which also
+        makes the 1:1 page mapping auditable by text extraction.
+  \item One section per sheet is guaranteed by giving each page a unique CSS
+        named page (\code{section\#page-N \{ page: pNN; \}}) --- a forced
+        break-after alone was not reliable.
+\end{enumerate}
+
+\subsection{Fonts}
+System-installed, open-licensed only: \textbf{Noto Sans} (SIL OFL 1.1) for
+body and headings, \textbf{DejaVu Sans Mono} for readouts, and
+\textbf{DejaVu Sans} as fallback because it carries the confidence icons
+($\bullet$, $\blacklozenge$, $\blacktriangle$, $\star$, arrows) that Noto Sans
+lacks --- without it, WeasyPrint silently substitutes serif faces for those
+glyphs. The OFL licence text ships with the bundle. Serif faces still listed
+by \code{pdffonts} come from text inside the matplotlib SVGs, not body copy.
+
+\subsection{CMYK / PDF-X}
+Ghostscript \code{pdfwrite} with \code{-sColorConversionStrategy=CMYK}
+(\code{layout/cmyk\_attempt.py}) produces \code{astronot-print-cmyk.pdf} as a
+\emph{proofing} artefact. Honest limitation: this is colour re-encoding, not a
+press-ready X-1a with an embedded OutputIntent ICC --- the print shop must do
+final separations. Stated in README and BUILD\_LOG rather than overclaimed.
+
+% ==================================================================
+\section{The design system}
+
+\subsection{Tokens defined once}
+Colours, the four confidence labels, page geometry and font stacks live only
+in \code{design/tokens.py}; the CSS is \emph{generated} from it
+(\code{tokens.css}). Change a token, rebuild, and both editions update.
+
+\subsection{The confidence-label system}
+Every scientific claim is tagged with exactly one label; icons and colours are
+fixed system-wide:
+
+\begin{longtable}{p{10mm}p{44mm}p{92mm}}
+\textbf{Icon} & \textbf{Label} & \textbf{Meaning / colour}\\
+\endhead
+$\bullet$ & Established science & verified repeatedly, independently
+reproduced --- deep green \#2E7D4F\\
+$\blacklozenge$ & Active research & under study; conclusions may change ---
+deep blue \#193F68\\
+$\blacktriangle$ & Plausible projection & reasoned extrapolation, not a
+promise --- amber-brown \#B0722A\\
+$\star$ & Fictional scenario & invented for storytelling, always marked ---
+violet \#8A4FA3\\
+\end{longtable}
+
+In manuscripts these are written inline as \code{::est::}, \code{::act::},
+\code{::pla::}, \code{::fic::}; the builder converts them to styled spans.
+Page-level badges are generated from the front-matter \code{confidence} list.
+Contrast of every text/background pair is checked automatically against WCAG
+AA (worst acceptable pair currently 5.05:1 --- pass).
+
+\subsection{Page types and spreads}
+Four page types, chosen per page in front matter:
+\emph{cinematic chapter opener} (dark, chapter number, accent rule),
+\emph{explanatory article} (three-column body, evidence chart),
+\emph{infographic-led spread} (tables/diagrams dominate),
+\emph{interactive challenge page} (mission tag + QR box). The
+\code{dark: true/false} flag alternates spreads; dark pages set
+\code{background: \#101B33} full-bleed with cyan headings and light captions.
+
+\subsection{Type system}
+Body 10.5~pt, captions 8.5~pt, footers 7.5~pt --- all high contrast, all from
+the tokens file.
+
+% ==================================================================
+\section{How a page gets built (the pipeline in detail)}
+
+\begin{enumerate}[leftmargin=6mm]
+  \item \textbf{Tokens} --- \code{design/tokens.py} regenerates
+        \code{tokens.css}/\code{tokens.json}.
+  \item \textbf{Figures} --- \code{make\_figures.py} draws all eleven SVGs
+        with the seeded RNG. Simulated ones receive the red banner at render
+        time; non-simulated ones (e.g.\ the telescope-sensitivity chart, whose
+        post-2026 region is explicitly labelled an extrapolation) do not.
+  \item \textbf{QR} --- \code{make\_qr.py} reads \code{links.yaml}, writes
+        \code{qr/out/Q-*.svg}.
+  \item \textbf{Mission tests} --- \code{missions/tests/test\_missions.py}
+        executes each \code{logic.js} under Node: M01's depth formula, M02's
+        matched-filter detection with a $<10\%$ false-alarm requirement over
+        50 seeded noise streams, M03's budget model, M04's 12-case answer key,
+        M05's case resolution, M06's storage shape --- plus HTML checks
+        (SIMULATED/FICTIONAL/PRIVACY labels present, keyboard controls,
+        \code{aria-live} feedback).
+  \item \textbf{Layout} --- \code{build\_layout.py} parses each manuscript
+        file's front matter, converts Markdown (with tables), applies inline
+        confidence tokens and \texttt{[NEEDS VERIFICATION]} highlighting,
+        inserts the figure (with alt text + SIMULATED banner if flagged), the
+        QR box, the confidence badges and the static footer; assigns each page
+        a unique named page; then WeasyPrint renders both editions.
+  \item \textbf{CMYK attempt} --- Ghostscript proofing conversion.
+  \item \textbf{QA gate} --- \code{qa\_check.py} (next section).
+\end{enumerate}
+
+% ==================================================================
+\section{The QA gate: rules turned into code}
+
+\code{qa/qa\_check.py} fails the build if any of these is violated:
+
+\begin{longtable}{p{66mm}p{80mm}}
+\textbf{Check} & \textbf{Method}\\
+\endhead
+48 pages numbered 1--48 & parse every manuscript's front matter\\
+Claims map to references & every \code{references:} ID must exist in the
+register\\
+No guessed facts & \texttt{[NEEDS VERIFICATION]} markers counted (11)\\
+AN-2050-017 consistency & must appear on exactly pages 12, 41, 42, 43, 44 ---
+and in mission M05's HTML \emph{and} logic\\
+SIMULATED labelling & simulated figure types must be flagged in front matter;
+``SIMULATED'' text must appear in both PDFs (pdftotext)\\
+Fictional labelling & mission/fictional pages counted (13)\\
+Logo untouched & placeholder exists; register must flag ``BLOCKER --- brand
+approval''\\
+Page 45 placeholders & five \texttt{PLACEHOLDER} slots required\\
+QR register complete & every \code{links.yaml} entry has an SVG; portal links
+must be \code{.example} placeholders\\
+PDF structure & pdfinfo: 48 pages; page box $612.283\times858.898$~pt (print)
+/ $595.276\times841.89$~pt (digital); pdffonts: all fonts embedded\\
+Word count & body text (page furniture excluded) within 9{,}000--12{,}000\\
+Contrast & WCAG ratio $\ge 4.5$ for all defined pairs\\
+\end{longtable}
+
+\code{qa/link\_checker.py} additionally verifies that every local QR target
+exists on disk and that all internal anchors in the digital HTML resolve.
+
+% ==================================================================
+\section{The missions: design and verification}
+
+All six are static HTML/CSS/vanilla-JS --- zero network dependencies ---
+keyboard-friendly (native \code{<input type=range>}, \code{<select>},
+\code{<button>} with focus outlines), with \code{aria-live} result regions and
+SIMULATED/FICTIONAL/PRIVACY banners in-app. Pure logic is separated into
+\code{logic.js} files that export via \code{module.exports} so Node can run
+them headlessly; \code{index.html} handles only drawing and interaction.
+
+\begin{longtable}{p{12mm}p{38mm}p{96mm}}
+\textbf{ID} & \textbf{Activity} & \textbf{Mechanics / verified answer key}\\
+\endhead
+M01 & Exoplanet transit (p16) & seeded light curve, depth fixed at 1.56\%;
+slider varies $R_p/R_s$; depth $=(R_p/R_s)^2$; test asserts the reference
+$\sqrt{0.0156}\approx0.125$ and that the curve dips correctly.\\
+M02 & Signal or noise (p20) & seeded stream, 50\% chance of a chirp; matched
+filter against a template; threshold 0.35; test requires signal detected,
+noise rejected, and $\le 10\%$ false alarms over 50 pure-noise streams.\\
+M03 & Lunar base designer (p31) & 100 fictional units across power, shielding,
+water, research; hazards: 14-day night (power $\ge 30$), radiation (shielding
+$\ge 25$), water ($\ge 20$), morale (research $\ge 15$); over-budget fails;
+reference allocation verified.\\
+M04 & Human vs AI (p36) & 12 deterministic detections with a fixed answer
+key; the simulated classifier has documented confusions (cosmic-ray hits,
+diffraction spikes, one irregular transient); test asserts 12 cases, key
+self-consistency, and an imperfect AI.\\
+M05 & Cosmic detective (pp41--44) & fictional case AN-2050-017; three
+hypotheses; the answer portal resolves to H3 (instrumental) with a
+four-point rationale; test pins the observation ID and the answer.\\
+M06 & Prediction log (p8) & five prompts with confidence sliders and
+falsification fields; data kept in \code{localStorage} only --- the UI states
+this; JSON export; validator checks storage shape.\\
+\end{longtable}
+
+% ==================================================================
+\section{Editorial integrity: how each non-negotiable rule is met}
+
+\begin{longtable}{p{8mm}p{138mm}}
+\textbf{\#} & \textbf{How it is implemented}\\
+\endhead
+1 & No fabricated evidence: simulated plots/log/spectra all carry the red
+SIMULATED banner, axis labels, units and error bars; the banner text is
+defined once in \code{tokens.py}. Simulated figure \emph{front matter} is
+flagged so QA can cross-check.\\
+2 & No invented contributors/quotes: page 45 carries five explicit
+\texttt{PLACEHOLDER} slots plus the submission policy (consent, withdrawal
+right). QA requires the placeholders to exist.\\
+3 & Logo: \code{assets/logo/PLACEHOLDER\_LOGO.svg} is used verbatim and never
+redrawn; the register marks the official artwork + brand approval as a
+BLOCKER.\\
+4 & Images/licences: nothing was downloaded. All visuals are original seeded
+figures or hand-written SVG. The register states that a credit line is not
+permission and that NASA/ESA/ESO candidates need individual review including
+commercial print rights.\\
+5 & Claims$\to$references: front-matter \code{references} must match
+registered IDs; unverifiable facts are written as
+\texttt{[NEEDS VERIFICATION]} (11 instances) rather than guessed; no invented
+URLs/DOIs (uncertain locators flagged \code{locator\_verified: false}).\\
+6 & Fictional 2050 events (M03's model, M05's case, the ``city on Mars''
+verdict) are labelled \texttt{$\star$ Fictional scenario} wherever they
+appear.\\
+7 & AN-2050-017: one fictional ID, pinned by QA to pages 12, 41--44 and the
+M05 portal, with a consistent spectrum on p12 and the two-night evidence
+figure on p42.\\
+8 & Indian space science (p29): verified capabilities (Chandrayaan-3 south-pole
+landing, Aditya-L1, MOM, launch families) are cited to ISRO's official pages;
+ambitions (Gaganyaan, sample return) are labelled \texttt{$\blacktriangle$}/
+\texttt{$\blacklozenge$} with targets-not-guarantees language.\\
+\end{longtable}
+
+% ==================================================================
+\section{What remains open before artwork lock}
+
+\begin{enumerate}[leftmargin=6mm,itemsep=1pt]
+  \item Official ASTRO-NOT logo file and brand approval (placeholder in place).
+  \item Cover key image: individual licence review of NASA Image \& Video
+        Library / SVS / ESA / ESO candidates --- a credit line is not
+        permission.
+  \item The 11 \texttt{[NEEDS VERIFICATION]} items (journal DOIs for R06--R08,
+        R15; NIST record; NASA FY budget document; ISRO Gaganyaan page path).
+  \item Page 45: real, permissioned voices.
+  \item Real portal domain to replace \code{www.astro-not.example}.
+  \item Print-shop CMYK separations (the Ghostscript output is proofing only).
+\end{enumerate}
+
+\section*{Quick command reference}
+\begin{lstlisting}
+.venv/bin/python build.py            # rebuild everything + QA gate
+pdftoppm -png -r 100 output/astronot-print.pdf preview   # page previews
+xdg-open output/astronot-digital.pdf # read the digital edition
+xdg-open missions/m01-transit/index.html                  # try a mission
+.venv/bin/python qa/qa_check.py      # run the rule gate alone
+.venv/bin/python missions/tests/test_missions.py
+\end{lstlisting}
+
+\end{document}

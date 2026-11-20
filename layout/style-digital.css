@@ -1,0 +1,6 @@
+/* Digital edition: A4, no bleed, slightly larger safe area, accessible links shown */
+@page { size: 210mm 297mm; margin: 0; }
+section.page { height: 297mm; width: 210mm; padding: 16mm 15mm 15mm; }
+footer.pageline { left: 15mm; right: 15mm; }
+a { color: var(--deep-blue); text-decoration: underline; text-underline-offset: 1pt; }
+.dark a { color: var(--icy-cyan); }

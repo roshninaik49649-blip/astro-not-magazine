@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70" role="img" aria-label="ASTRO-NOT logo placeholder">
+  <rect width="220" height="70" rx="10" fill="#101B33"/>
+  <rect x="6" y="6" width="208" height="58" rx="7" fill="none" stroke="#83DBF3" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="24" y="43" font-family="Noto Sans, sans-serif" font-size="22" font-weight="700" fill="#F4F6F3" letter-spacing="2">ASTRO-NOT</text>
+  <circle cx="196" cy="24" r="7" fill="none" stroke="#F3A86C" stroke-width="2"/>
+  <path d="M196 17 A7 7 0 0 1 196 31" fill="#F3A86C"/>
+  <text x="24" y="58" font-family="Noto Sans, sans-serif" font-size="9" fill="#83DBF3">PLACEHOLDER LOGO — official ASTRO-NOT artwork + brand approval required before lock</text>
+</svg>
