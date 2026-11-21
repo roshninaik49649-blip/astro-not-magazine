@@ -16,8 +16,7 @@ simulated: true
 
 **Going deeper.** The waveform *is* the physics. As the two bodies orbit faster and closer, frequency and amplitude climb — a "chirp". From the chirp, analysts reconstruct the masses, the distance (~1.3 billion light-years for the first event) and even test whether the ringdown matches the black holes general relativity predicts ::est:: [R03].
 
-**Interferometry in brief.** Each LIGO arm is 4 km long; laser light compares the two arms to a precision far finer than an atom ::est:: [R17]. Cosmic-scale science, metrology at its limit.
+**Interferometry in brief.** Each LIGO arm is 4 km long; laser light compares the two arms to a precision far finer than an atom ::est:: [R17].
 
 **Advanced corner.** Multi-messenger astronomy: in 2017, a gravitational-wave event was followed within seconds by gamma rays from the same sky patch, then by optical telescopes finding the kilonova ::est:: [R17]. Speed of light and speed of gravity agree to ~1 part in 10¹⁵ — a stunning confirmation of relativity.
 
-**Caption.** The figure is a SIMULATED chirp for training (real strain data is public via the collaboration's open data [R17]); rising frequency + rising amplitude in noise is the pattern to learn.

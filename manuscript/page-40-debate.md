@@ -34,4 +34,3 @@ None of these changes the Universe. Each changes *humanity's relationship to it*
 Your move: rank A–D, then defend your **last place** hardest — that's where your assumptions live.
 :::
 
-**Caption.** Our editorial vote? C — housekeeping is the foundation. Argue with us in the predictions log (M06).

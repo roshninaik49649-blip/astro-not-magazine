@@ -21,4 +21,3 @@ figure_alt: "Chart: aggregate survey capability on a log scale from 1960 to 2050
 
 **Advanced corner.** Diffraction sets a hard floor: angular resolution ≈ 1.22 λ/D. It's why infrared telescopes in space beat bigger optical scopes on the ground, and why survey cadence — how often the sky is revisited — is now as precious as sensitivity [R12]. By 2050 ▲, expect wider fields, faster cadence and petabyte-scale pipelines (p 33) rather than one magical "super-scope".
 
-**Caption.** The chart's post-2026 region is an extrapolation ▲, not a measurement: technology can leap; physics sets the ceiling.

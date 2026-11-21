@@ -9,7 +9,7 @@ references: [R09, R22]
 ---
 ## Indian space science: verified now, ambitious next
 
-India's programme matters to this magazine's argument: it shows a nation doing serious space science on discipline, separating fact from ambition. We do the same — verified capabilities first, labelled ambitions second.
+India shows a nation doing serious space science on discipline, separating fact from ambition — verified capabilities first, labelled ambitions second.
 
 ### Verified current capabilities ::est:: [R09]
 
@@ -25,6 +25,5 @@ India's programme matters to this magazine's argument: it shows a nation doing s
 
 **Going deeper.** Cost discipline is India's signature ::est::: the Mars orbiter's budget was famously a fraction of comparable missions. That changes what "ambitious" can mean — more missions per rupee, smaller margins per mission.
 
-**Advanced corner.** For lunar polar science, ISRO's in-situ temperature and element measurements from Chandrayaan-3 complement orbital ice mapping from other agencies ◆ [R09] — multi-nation datasets are how the south-pole resource picture is being assembled.
+**Advanced corner.** For lunar polar science, ISRO's in-situ temperature and element measurements from Chandrayaan-3 complement orbital ice mapping from other agencies ◆ [R09].
 
-**Caption.** Everything on the "verified" list is a matter of public record [R09]; everything on the "ambitions" list is a plan ▲ — the same discipline we ask of every page.

@@ -9,7 +9,7 @@ references: []
 ---
 ## References
 
-Numbered registers (R01–R22) with full locators, verification status and page-use notes live in `registers/references.yaml` and are reproduced below in short form. Claims tagged **[NEEDS VERIFICATION]** in the text map to entries whose locators are unconfirmed — they will be resolved or rewritten before artwork lock.
+Numbered registers (R01–R22) with full locators and verification status live in `registers/references.yaml`; short form below. Entries marked **[NEEDS VERIFICATION]** will be resolved before artwork lock.
 
 - **R01** NASA Exoplanet Archive (Caltech/IPAC) — exoplanetarchive.ipac.caltech.edu
 - **R02** NASA — James Webb Space Telescope — science.nasa.gov/mission/webb/

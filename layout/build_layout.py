@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """Layout engine: manuscript/*.md -> HTML -> WeasyPrint PDF (print + digital).
 
-Design decisions recorded in BUILD_LOG.md:
-- Scribus headless was not available; WeasyPrint (HTML/CSS->PDF) chosen instead.
-- Page numbers are static (from YAML front matter), enabling full-bleed
-  dark/light pages without relying on @page margin boxes.
-- Digital edition attempts PDF/UA-1 tagged output with bookmarks + internal links.
+Architecture (v3, "magazine look"):
+- tokens.css (generated from design/tokens.py) is inlined FIRST — all colours
+  resolve from the single source of truth. (v2 silently dropped it: undefined
+  custom properties rendered dark pages white. Never again.)
+- Page architecture by type: full-bleed hero art on covers + openers, display
+  chapter type, masthead on the front cover, justified/hyphenated multi-column
+  article bodies with standfirst + drop cap, two-column mission briefings,
+  dotted-leader contents rows.
+- Page numbers are static (from YAML front matter); one section per sheet is
+  guaranteed by per-page named pages.
 """
 import os, re, glob, yaml, markdown
-from weasyprint import HTML, CSS
+from weasyprint import HTML
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -32,6 +37,11 @@ def fenced(text):
         mc = re.match(r"^:::chip (.+)$", line)
         if mc:
             out.append(f'<span class="chip">{mc.group(1)}</span>')
+            continue
+        mt = re.match(r"^:::toc (.+?) \| (.+)$", line)
+        if mt:
+            out.append(f'<div class="tocrow"><span class="tocname">{mt.group(1)}</span>'
+                       f'<span class="tocfill"></span><span class="tocpage">{mt.group(2)}</span></div>')
             continue
         m = re.match(r"^::: *(\w+)(?: +(.+))?$", line)
         if m:
@@ -62,7 +72,7 @@ def inline_toks(text):
             return f'<span class="tok-{key}" title="{label}">{icon} {label}</span>'
         return m.group(0)
     text = re.sub(r"::(\w+)::", sub, text)
-    # compound variants: e.g. ::est→▲:: and ::est/▲:: (label → label)
+
     def compound(m):
         key, sep = m.group(1), m.group(2)
         if key not in TOK:
@@ -83,8 +93,15 @@ def internal_links(html, digital):
         if 1 <= n <= 48:
             return f'{m.group(1)}<a href="#page-{n}">p {m.group(2)}</a>'
         return m.group(0)
-    html = re.sub(r"(pp? )(\d{1,2})(?=[^\d/])", sub, html)
-    return html
+    return re.sub(r"(pp? )(\d{1,2})(?=[^\d/])", sub, html)
+
+
+def split_title(body_html):
+    """Split at the first </h2>: returns (title_html, rest_html)."""
+    parts = body_html.split("</h2>", 1)
+    if len(parts) == 2:
+        return parts[0] + "</h2>", parts[1]
+    return "", body_html
 
 
 def page_html(meta, body_html, edition):
@@ -92,7 +109,8 @@ def page_html(meta, body_html, edition):
     dark = "dark" if meta.get("dark") else "light"
     ptype = meta.get("type", "article")
     kicker = meta.get("section", "")
-    # confidence badges in header (full labels, mapped to their token class)
+
+    # --- confidence badges ---
     badges = ""
     class_by_label = {v[0]: k for k, v in TOK.items()}
     for b in meta.get("confidence", []):
@@ -100,20 +118,18 @@ def page_html(meta, body_html, edition):
         if key:
             label, icon = TOK[key]
             badges += f'<span class="conf conf-{key}">{icon} {label}</span>'
-    if "cover" not in ptype:
-        kicker_line = f'<p class="kicker">{kicker}</p>'
-    else:
-        kicker_line = ""
-    # mission / qr
+    badges = f'<div class="badges">{badges}</div>' if badges else ""
+
+    # --- QR (mission pages: placed inside the briefing layout) ---
     qr_html = ""
     if meta.get("qr"):
         qr_path = os.path.join(ROOT, "qr", "out", f"{meta['qr']}.svg")
         if os.path.exists(qr_path):
-            mission = re.search(r"missions/([\w-]+)/", meta.get("qr_url", "")) 
-            qr_html = (f'<div class="qrbox"><img src="{qr_path}" alt="QR code linking to '
-                       f'{meta["qr"]} destination; see qr/links.yaml"/><p>{meta["qr"]} · scan or open the '
-                       f'missions folder</p></div>')
-    # figures
+            qr_html = (f'<div class="qrbox static"><img src="{qr_path}" alt="QR code linking to '
+                       f'{meta["qr"]} destination; see qr/links.yaml"/><p>{meta["qr"]} · scan or open '
+                       f'the missions folder</p></div>')
+
+    # --- figure ---
     fig_html = ""
     if meta.get("figure"):
         fig_path = os.path.join(ROOT, meta["figure"])
@@ -123,40 +139,59 @@ def page_html(meta, body_html, edition):
                    'not real observations. Axes carry units; bars show 1σ uncertainty.</div>')
         alt = meta.get("figure_alt", "Figure")
         fig_html = (f'<figure class="wide"><img src="{fig_path}" alt="{alt}"/>{sim}'
-                    f'<figcaption>{alt} (generated figure; register: assets/asset-register.yaml)</figcaption></figure>')
-    # original artwork (cover / openers / back cover)
+                    f'<figcaption>{alt} — generated figure; register: assets/asset-register.yaml</figcaption></figure>')
+
+    # --- hero artwork (full-bleed) ---
+    hero = ""
     if meta.get("art"):
         art_path = os.path.join(ROOT, meta["art"])
         if os.path.exists(art_path):
             alt = meta.get("art_alt", "Original illustration")
-            art_html = (f'<figure class="artblock"><img src="{art_path}" alt="{alt}"/>'
-                        f'<figcaption class="artcap">{alt} — original artwork, '
-                        f'assets/asset-register.yaml</figcaption></figure>')
-            if ptype in ("cover", "opener"):
-                parts = body_html.split("</h2>", 1)
-                if len(parts) == 2:
-                    body_html = parts[0] + "</h2>" + art_html + parts[1]
-                else:
-                    body_html = art_html + body_html
-            else:
-                body_html = art_html + body_html
-    if ptype == "cover":
-        body_html = re.sub(r"<p>ASTRO-NOT logo placeholder.*?</p>", "", body_html, flags=re.S)
-        logo = f'<div class="logo-strip"><img src="{os.path.join(ROOT,"assets/logo/PLACEHOLDER_LOGO.svg")}" alt="ASTRO-NOT logo PLACEHOLDER — official artwork and brand approval required before lock"/></div>'
-        if page_no == 1:
-            body_html = body_html.replace("<h1", f"<p class='kicker'>{logo}</p><h1", 1)
+            hero = (f'<figure class="hero"><img src="{art_path}" alt="{alt}"/>'
+                    f'<figcaption>{alt} — original artwork; assets/asset-register.yaml</figcaption></figure>')
+
+    kicker_line = f'<p class="kicker">{kicker}</p>' if ptype not in ("cover", "opener") else ""
     mission_tag = '<span class="mission-tag">INTERACTIVE MISSION</span>' if ptype == "mission" else ""
-    body_html = internal_links(body_html, edition == "digital")
-    footer = (f'<footer class="pageline"><span>ASTRO-NOT · THE 2050 PROJECT — {kicker}</span>'
-              f'<span>Page {page_no:02d} / 48</span></footer>')
+
+    # --- assemble body per page type ---
+    if ptype == "cover" and page_no == 1:
+        # masthead + hero + cover text (masthead h1/h2 from markdown are stripped)
+        body_html = re.sub(r"^\s*<h1>.*?</h1>\s*<h2>.*?</h2>", "", body_html, count=1, flags=re.S)
+        body_html = re.sub(r"<p>ASTRO-NOT logo placeholder.*?</p>", "", body_html, flags=re.S)
+        logo = os.path.join(ROOT, "assets", "logo", "PLACEHOLDER_LOGO.svg")
+        masthead = (f'<div class="masthead"><img src="{logo}" alt="ASTRO-NOT logo PLACEHOLDER — '
+                    f'official artwork and brand approval required before artwork lock"/>'
+                    f'<div class="mast-words"><span class="mast-name">ASTRO-NOT</span>'
+                    f'<span class="mast-sub">THE 2050 PROJECT · ISSUE 01 · NOVEMBER 2026</span>'
+                    f'</div></div>')
+        inner = masthead + hero + f'<div class="coverflow">{body_html}</div>'
+    elif ptype == "cover":
+        inner = hero + f'<div class="coverflow">{body_html}</div>'
+    elif ptype == "opener":
+        title, rest = split_title(body_html)
+        inner = hero + badges + title + f'<div class="cols2">{rest}</div>'
+    elif ptype in ("article", "reference"):
+        title, rest = split_title(body_html)
+        cols = 2 if ("<table" in rest or ptype == "reference") else 3
+        inner = kicker_line + badges + f'<div class="pagebody">{title}{fig_html}<div class="cols{cols}">{rest}</div></div>'
+    elif ptype == "mission":
+        title, rest = split_title(body_html)
+        inner = (kicker_line + mission_tag + badges +
+                f'<div class="pagebody">{title}'
+                f'<div class="mission-layout"><div class="mission-text">{rest}</div>{qr_html}</div></div>')
+    else:  # infographic
+        inner = kicker_line + badges + f'<div class="pagebody">{fig_html}{body_html}</div>'
+
+    inner = internal_links(inner, edition == "digital")
+    footer = (f'<footer class="pageline"><span class="wordmark">ASTRO-NOT · THE 2050 PROJECT</span>'
+              f'<span class="sect">{kicker}</span>'
+              f'<span class="pageno">Page {page_no:02d} / 48</span></footer>')
     return (f'<section class="page {dark} type-{ptype}" id="page-{page_no}" '
             f'data-confidence="{",".join(meta.get("confidence", []))}">'
-            f'{kicker_line}{mission_tag}{badges}{qr_html}'
-            f'<div class="body">{fig_html}{body_html}</div>{footer}</section>')
+            f'<div class="body">{inner}</div>{footer}</section>')
 
 
 def build(edition):
-    MD.reset()
     sections = []
     for md_file in sorted(glob.glob(os.path.join(ROOT, "manuscript", "*.md"))):
         raw = open(md_file).read()
@@ -174,7 +209,8 @@ def build(edition):
                     'not real observations.</div>') + html
         sections.append(page_html(meta, html, edition))
     title = "ASTRO-NOT — THE 2050 PROJECT"
-    css_files = [os.path.join(HERE, "style.css"),
+    css_files = [os.path.join(ROOT, "design", "tokens.css"),
+                 os.path.join(HERE, "style.css"),
                  os.path.join(HERE, "style-digital.css" if edition == "digital" else "style-print.css")]
     named = "".join(f"section#page-{n} {{ page: p{n:02d}; }}" for n in range(1, 49))
     css_all = "".join(open(f).read() for f in css_files) + named
@@ -183,7 +219,6 @@ def build(edition):
     variant = {"pdf_variant": "pdf/ua-1"} if edition == "digital" else {}
     out_pdf = os.path.join(OUT, f"astronot-{edition}.pdf")
     HTML(string=doc, base_url=ROOT).write_pdf(out_pdf, **variant)
-    # keep the intermediate HTML for inspection (digital only)
     open(os.path.join(OUT, f"astronot-{edition}.html"), "w").write(doc)
     print(f"  built {out_pdf}")
 

@@ -1,140 +1,111 @@
-/* ASTRO-NOT magazine layout — shared styles.
-   Print edition page box: 216x303 mm (3 mm bleed each side), trim 210x297.
-   Digital edition page box: 210x297 (no bleed). Page-level overrides in
-   style-print.css / style-digital.css. Colours/fonts from tokens.css. */
+/* ASTRO-NOT magazine layout — shared styles (v3 "magazine look").
+   Print page box: 216x303 mm (3 mm bleed), trim 210x297, safe margins 15 mm.
+   Digital: 210x297, no bleed (style-digital.css overrides the pad vars).
+   ALL colours resolve from design/tokens.css, inlined first by the builder. */
 
 @page { size: 216mm 303mm; margin: 0; }
+:root { --pad-t: 18mm; --pad-x: 17mm; --pad-b: 16mm; }
 
 html, body { margin: 0; padding: 0; }
-body { font-family: var(--font-sans); font-size: 10.5pt; line-height: 1.38; color: #182338; }
+body { font-family: var(--font-sans); font-size: 10.5pt; line-height: 1.4; color: #182338; }
 
 section.page {
   height: 303mm; width: 216mm; box-sizing: border-box;
-  padding: 18mm 17mm 16mm;           /* 3mm bleed + 15mm safe margin */
+  padding: var(--pad-t) var(--pad-x) var(--pad-b);
   position: relative; overflow: hidden;
   break-after: page; page-break-after: always;
 }
 section.page:last-child { break-after: auto; page-break-after: auto; }
 
-/* --- dark / light spreads --- */
+/* ---------- dark / light spreads ---------- */
 .light { background: var(--paper); }
 .dark  { background: var(--midnight-navy); color: var(--paper); }
 .dark h1, .dark h2, .dark h3 { color: var(--icy-cyan); }
 .dark .kicker { color: var(--solar-accent); }
 .dark a { color: var(--icy-cyan); }
-
-/* --- typography --- */
-h1 { font-size: 30pt; line-height: 1.08; margin: 0 0 4mm; color: var(--midnight-navy); letter-spacing: -0.3pt; }
-h2 { font-size: 17pt; line-height: 1.15; margin: 0 0 3mm; color: var(--midnight-navy); }
-h3 { font-size: 11.5pt; margin: 4mm 0 1.5mm; color: var(--deep-blue); }
-.dark h3 { color: var(--icy-cyan); }
-p  { margin: 0 0 2.2mm; }
-.kicker { font-size: 8.5pt; letter-spacing: 2.2pt; text-transform: uppercase; color: var(--deep-blue); font-weight: 700; }
-footer.pageline { position: absolute; bottom: 8mm; left: 17mm; right: 17mm;
-  font-size: 7.5pt; color: #6B7A93; display: flex; justify-content: space-between;
-  border-top: 0.4pt solid #B9C4D4; padding-top: 1.5mm; }
-.dark footer.pageline { color: #7E93B8; border-top-color: #2A3E63; }
-
-/* --- confidence badges --- */
-.conf { display: inline-block; font-size: 7.5pt; font-weight: 700; padding: 0.4mm 1.6mm;
-  border-radius: 2mm; margin-right: 1.2mm; color: #fff; }
-.conf-est { background: var(--conf-established-science); }
-.conf-act { background: var(--conf-active-research); }
-.conf-pla { background: var(--conf-plausible-projection); }
-.conf-fic { background: var(--conf-fictional-scenario); }
-span.tok-est, span.tok-act, span.tok-pla, span.tok-fic {
-  font-weight: 700; font-size: 0.92em; padding: 0 0.4mm; border-radius: 0.8mm;
-}
-.tok-est { color: var(--conf-established-science); }
-.tok-act { color: var(--conf-active-research); }
-.tok-pla { color: var(--conf-plausible-projection); }
-.tok-fic { color: var(--conf-fictional-scenario); }
-.dark span.tok-est, .dark span.tok-act, .dark span.tok-pla, .dark span.tok-fic { color: #fff; background: inherit; }
-.dark .tok-est { background: var(--conf-established-science); }
-.dark .tok-act { background: var(--conf-active-research); }
-.dark .tok-pla { background: var(--conf-plausible-projection); }
-.dark .tok-fic { background: var(--conf-fictional-scenario); }
-.nv { background: #F9E9A9; color: #5A4400; font-weight: 700; font-size: 0.88em; padding: 0 0.8mm; border-radius: 0.8mm; }
-
-/* --- simulated banner --- */
-.sim-banner { background: #FBE9E7; border: 1pt solid #C0392B; color: #8A1F1F;
-  font-size: 7.5pt; font-weight: 700; padding: 1mm 2mm; margin: 2mm 0; border-radius: 1mm; }
-.dark .sim-banner { background: #3A1216; color: #F5B7B1; border-color: #C0392B; }
-
-/* --- figures --- */
-figure { margin: 2.5mm 0; break-inside: avoid; }
-figure img { max-width: 100%; border: 0.4pt solid #B9C4D4; border-radius: 1.2mm; }
-figcaption { font-size: 8.5pt; color: #4A5A75; margin-top: 1mm; }
-.dark figcaption { color: #A9BAD6; }
-.dark figure img { border-color: #2A3E63; background: #fff; }
-
-/* --- three-column article grid --- */
-.cols3 { column-count: 3; column-gap: 5.5mm; column-rule: 0.3pt solid #C9D2DF; }
-.dark .cols3 { column-rule-color: #2A3E63; }
-.cols3 h3 { break-after: avoid; }
-.cols3 figure { break-inside: avoid; }
-.cols3 table { break-inside: avoid; }
-.wide { break-inside: avoid; }   /* spans used for full-width elements inside cols3 */
-
-/* --- tables --- */
-table { border-collapse: collapse; width: 100%; font-size: 8.5pt; margin: 2mm 0 3mm; }
-th { background: var(--deep-blue); color: #fff; text-align: left; padding: 1.2mm 1.8mm; font-size: 8pt; }
-td { border-bottom: 0.4pt solid #C9D2DF; padding: 1.2mm 1.8mm; vertical-align: top; }
-.dark td { border-bottom-color: #2A3E63; }
-tr { break-inside: avoid; }
-
-/* --- blockquote (physics key lines) --- */
-blockquote { border-left: 1.2mm solid var(--solar-accent); margin: 2mm 0; padding: 1mm 0 1mm 3mm;
-  font-size: 10pt; color: #26334D; break-inside: avoid; }
-.dark blockquote { color: var(--icy-cyan); border-left-color: var(--solar-accent); }
-
-/* --- mission pages --- */
-.mission-tag { display: inline-block; background: var(--solar-accent); color: #40260F;
-  font-weight: 700; font-size: 9pt; padding: 0.8mm 2.5mm; border-radius: 2mm; margin-bottom: 3mm; }
-.qrbox { float: right; width: 34mm; text-align: center; margin: 0 0 2mm 4mm; background: #fff;
-  border: 0.5pt solid #B9C4D4; border-radius: 1.5mm; padding: 2mm; }
-.qrbox img { width: 30mm; height: 30mm; }
-.qrbox p { font-size: 7pt; color: #4A5A75; margin: 1mm 0 0; }
-.dark .qrbox { background: #fff; }
-
-/* --- chapter openers --- */
-.opener-chapter { font-size: 12pt; letter-spacing: 4pt; color: var(--solar-accent); font-weight: 700; }
-.opener-rule { border: none; border-top: 1.2pt solid var(--solar-accent); width: 40mm; margin: 4mm 0; }
-
-/* --- cover --- */
-.cover-block { text-align: center; margin-top: 34mm; }
-.cover-title { font-size: 21pt; letter-spacing: 6pt; color: var(--icy-cyan); }
-.cover-question { font-size: 33pt; line-height: 1.12; color: #fff; margin: 6mm 0; }
-.logo-strip img { width: 62mm; }
-.cover-tag { font-size: 9.5pt; color: var(--icy-cyan); }
-
-/* --- contents --- */
-.toc-chapter { border-left: 1.2mm solid var(--icy-cyan); padding-left: 3mm; margin: 2.6mm 0; }
-.toc-chapter h3 { margin: 0; color: #fff; font-size: 11pt; }
-.toc-chapter p { font-size: 8.5pt; color: #A9BAD6; margin: 0.6mm 0 0; }
-.keyline { font-size: 9pt; }
 a { color: var(--deep-blue); text-decoration: none; }
 
-/* --- magazine components (fenced ::: blocks) --- */
+/* ---------- full-bleed hero art (covers + openers) ---------- */
+figure.hero { margin: calc(-1 * var(--pad-t)) calc(-1 * var(--pad-x)) 4mm; }
+figure.hero img { width: 100%; display: block; }
+figure.hero figcaption { font-size: 7pt; color: #6B7A93; margin: 1mm 0 0; padding: 0 2mm; }
+.dark figure.hero figcaption { color: #7E93B8; }
+
+/* ---------- front-cover masthead ---------- */
+.masthead { display: flex; align-items: center; gap: 6mm; margin: 0 0 4mm; }
+.masthead img { width: 62mm; flex: none; }
+.mast-words .mast-name { display: block; font-size: 24pt; font-weight: 700;
+  letter-spacing: 5pt; color: var(--icy-cyan); line-height: 1.02; }
+.mast-words .mast-sub { display: block; font-size: 8pt; letter-spacing: 0.5pt;
+  color: var(--solar-accent); margin-top: 1.4mm; font-weight: 600; }
+
+/* ---------- display typography ---------- */
+h1 { font-size: 30pt; line-height: 1.08; margin: 0 0 4mm; color: var(--midnight-navy); letter-spacing: -0.3pt; }
+h2 { font-size: 21pt; line-height: 1.12; margin: 0 0 3mm; color: var(--midnight-navy); letter-spacing: -0.2pt; }
+h3 { font-size: 11.5pt; margin: 4mm 0 1.5mm; color: var(--deep-blue); }
+.dark h3 { color: var(--icy-cyan); }
+p  { margin: 0 0 2.4mm; }
+
+.type-cover .coverflow > h1 { font-size: 34pt; color: #FFFFFF; line-height: 1.1; margin: 2mm 0 5mm; }
+.type-opener h1 { font-size: 42pt; color: var(--solar-accent); letter-spacing: 1.5pt; margin: 1mm 0 1.5mm; }
+.type-opener h2 { font-size: 27pt; margin-bottom: 3mm; }
+
+/* feature titles carry an accent rule */
+.pagebody > h2, .mission-layout + * {  }
+.type-article .pagebody > h2, .type-reference .pagebody > h2, .type-mission .pagebody > h2, .type-infographic .pagebody > h2 {
+  border-bottom: 1.3pt solid var(--solar-accent); padding-bottom: 2.2mm; margin-bottom: 1mm;
+}
+
+.kicker { font-size: 8.5pt; letter-spacing: 0.5pt; text-transform: uppercase;
+  color: var(--deep-blue); font-weight: 700; margin-bottom: 1.2mm; }
+.badges { margin: 0 0 2.5mm; }
+
+/* ---------- columns: the magazine body ---------- */
+.cols3, .cols2 { text-align: justify; hyphens: auto; orphans: 3; widows: 3;
+  overflow-wrap: break-word; margin-top: 3mm; }
+.cols3 { column-count: 3; column-gap: 6mm; column-rule: 0.3pt solid #C9D2DF; }
+.cols2 { column-count: 2; column-gap: 8mm; column-rule: 0.3pt solid #C9D2DF; }
+.dark .cols3, .dark .cols2 { column-rule-color: #2A3E63; }
+.cols3 h3, .cols2 h3 { break-after: avoid; }
+.cols3 figure, .cols2 figure, .cols3 table, .cols2 table { break-inside: avoid; }
+
+/* standfirst: the opening paragraph reads larger, in the text colour.
+   (A float/inline-block ::first-letter inside multicol sends WeasyPrint's
+   column balancer into an unbounded loop — measured — so no drop caps.) */
+.cols3 > p:first-child, .cols2 > p:first-child, .mission-text > p:first-child {
+  font-size: 11.5pt; line-height: 1.46; color: #33415E; text-align: left; margin-bottom: 3.5mm; }
+.dark .cols3 > p:first-child, .dark .cols2 > p:first-child, .dark .mission-text > p:first-child { color: #C9D6EA; }
+
+/* cards become stacked panels inside columns (flex containers inside
+   multi-column flow both overflow the sheet and slow WeasyPrint down) */
+.cols3 .cards, .cols2 .cards { display: block; margin: 2mm 0; }
+.cols3 .cards > div, .cols2 .cards > div { width: 100%; margin-right: 0; margin-bottom: 2mm; }
+
+/* ---------- magazine components (fenced ::: blocks) ---------- */
 .callout { background: #E7EDF6; border-left: 2mm solid var(--deep-blue); padding: 2mm 3mm;
-  border-radius: 1mm; break-inside: avoid; margin: 2mm 0; }
+  border-radius: 1mm; break-inside: auto; margin: 2mm 0; }
 .dark .callout { background: #1B2C4F; border-left-color: var(--icy-cyan); }
 .callout .boxtitle { font-weight: 700; color: var(--deep-blue); font-size: 9.5pt; margin-bottom: 1mm; }
 .dark .callout .boxtitle { color: var(--icy-cyan); }
+
 .pull { font-size: 13.5pt; line-height: 1.28; color: var(--deep-blue);
-  border-left: 2mm solid var(--solar-accent); padding: 1.5mm 0 1.5mm 4mm;
-  margin: 3mm 0; break-inside: avoid; font-weight: 600; }
+  border-left: 2mm solid var(--solar-accent); padding: 0.5mm 0 1mm 4mm;
+  margin: 3mm 0; break-inside: auto; font-weight: 600; }
 .dark .pull { color: var(--icy-cyan); }
 .pull p { margin: 0; }
+.pull::before { content: "\201C"; display: block; font-size: 24pt; line-height: 0.5;
+  color: var(--solar-accent); margin-bottom: 0.8mm; }
+
 .chips { display: flex; margin: 2mm 0 3mm; }
 .chips > p { margin: 0; line-height: 2; }
 .chip { background: var(--deep-blue); color: #fff; font-size: 8.5pt; font-weight: 600;
   padding: 0.8mm 2.8mm; border-radius: 3mm; margin: 0 1.5mm 1.5mm 0; display: inline-block; }
 .chip.cyan { background: var(--icy-cyan); color: var(--midnight-navy); }
-.chip.sun { background: var(--solar-accent); color: #40260F; }
+.chip.sun  { background: var(--solar-accent); color: #40260F; }
 .dark .chip { background: #2A3E63; border: 0.4pt solid #3D568A; }
 .dark .chip.cyan { background: var(--icy-cyan); color: var(--midnight-navy); }
-.dark .chip.sun { background: var(--solar-accent); color: #40260F; }
+.dark .chip.sun  { background: var(--solar-accent); color: #40260F; }
+
 .cards { display: flex; flex-wrap: wrap; margin: 2.5mm 0; }
 .cards > div { width: calc(50% - 1.5mm); margin-right: 3mm; }
 .cards > div:nth-child(2n) { margin-right: 0; }
@@ -143,19 +114,92 @@ a { color: var(--deep-blue); text-decoration: none; }
 .dark .card { background: #1B2C4F; border-top-color: var(--icy-cyan); }
 .card .boxtitle { color: var(--deep-blue); font-weight: 700; font-size: 10pt; margin: 0 0 1mm; }
 .dark .card .boxtitle { color: var(--icy-cyan); }
+
 .ladder { margin: 2mm 0; }
-.ladder p { display: flex; align-items: baseline; gap: 2.5mm; margin: 1.6mm 0; break-inside: avoid; }
+.ladder p { display: flex; align-items: baseline; gap: 2.5mm; margin: 1.8mm 0; break-inside: avoid; }
 .ladder .n { display: inline-block; min-width: 6.5mm; height: 6.5mm; border-radius: 50%;
   background: var(--deep-blue); color: #fff; font-size: 8pt; font-weight: 700;
   text-align: center; line-height: 6.5mm; flex: none; }
 .ladder .n.hi { background: #2E7D4F; }
 .dark .ladder .n { background: #3D568A; }
+
 .stampbox { border: 0.7mm dashed #8A4FA3; color: #8A4FA3; font-family: var(--font-mono);
   font-size: 8.5pt; padding: 2mm 3mm; margin: 2mm 0; border-radius: 1.5mm; break-inside: avoid; }
 .stampbox p { margin: 0; }
 .stampbox .boxtitle { color: #8A4FA3; font-weight: 700; font-family: var(--font-sans); }
-.artblock { margin: 2.5mm 0 3mm; break-inside: avoid; }
-.artblock img { width: 100%; height: auto; border-radius: 1.5mm; }
-.type-opener .artblock img { border: 0.4pt solid #2A3E63; }
-.artcap { font-size: 7.5pt; color: #6B7A93; margin-top: 0.8mm; }
-.dark .artcap { color: #7E93B8; }
+
+/* dotted-leader contents rows */
+.tocrow { display: flex; align-items: baseline; gap: 2mm; margin: 2.6mm 0; }
+.tocname { font-weight: 600; font-size: 11.5pt; color: #FFFFFF; }
+.tocfill { flex: 1; border-bottom: 1pt dotted #4E6285; }
+.tocpage { font-family: var(--font-mono); color: var(--icy-cyan); font-size: 11pt; }
+
+/* ---------- confidence badges / tokens ---------- */
+.conf { display: inline-block; font-size: 7.5pt; font-weight: 700; padding: 0.4mm 1.8mm;
+  border-radius: 2mm; margin-right: 1.5mm; color: #fff; }
+.conf-est { background: var(--conf-established-science); }
+.conf-act { background: var(--conf-active-research); }
+.conf-pla { background: var(--conf-plausible-projection); }
+.conf-fic { background: var(--conf-fictional-scenario); }
+span.tok-est, span.tok-act, span.tok-pla, span.tok-fic {
+  font-weight: 700; font-size: 0.92em; padding: 0 0.6mm; border-radius: 0.8mm; }
+.tok-est { color: var(--conf-established-science); }
+.tok-act { color: var(--conf-active-research); }
+.tok-pla { color: var(--conf-plausible-projection); }
+.tok-fic { color: var(--conf-fictional-scenario); }
+.dark span.tok-est, .dark span.tok-act, .dark span.tok-pla, .dark span.tok-fic { color: #fff; }
+.dark .tok-est { background: var(--conf-established-science); }
+.dark .tok-act { background: var(--conf-active-research); }
+.dark .tok-pla { background: var(--conf-plausible-projection); }
+.dark .tok-fic { background: var(--conf-fictional-scenario); }
+.nv { background: #F9E9A9; color: #5A4400; font-weight: 700; font-size: 0.88em;
+  padding: 0 0.8mm; border-radius: 0.8mm; }
+
+/* ---------- simulated banner ---------- */
+.sim-banner { background: #FBE9E7; border: 1pt solid #C0392B; color: #8A1F1F;
+  font-size: 7.5pt; font-weight: 700; padding: 1mm 2mm; margin: 2mm 0; border-radius: 1mm; }
+.dark .sim-banner { background: #3A1216; color: #F5B7B1; border-color: #C0392B; }
+
+/* ---------- figures ---------- */
+figure.wide { margin: 2.5mm 0 3mm; break-inside: avoid; }
+figure.wide img { max-width: 100%; border: 0.4pt solid #B9C4D4; border-radius: 1.2mm; }
+figure.wide figcaption { font-size: 8.5pt; color: #4A5A75; margin-top: 1.2mm;
+  border-left: 1.2mm solid var(--solar-accent); padding: 0.8mm 0 0.8mm 2mm; background: #EDF1F7; }
+.dark figure.wide figcaption { color: #A9BAD6; background: #14213D; }
+.dark figure.wide img { border-color: #2A3E63; background: #fff; }
+
+/* ---------- tables ---------- */
+table { border-collapse: collapse; width: 100%; font-size: 8.5pt; margin: 2mm 0 3mm; }
+th { background: var(--deep-blue); color: #fff; text-align: left; padding: 1.2mm 1.8mm; font-size: 8pt; }
+td { border-bottom: 0.4pt solid #C9D2DF; padding: 1.2mm 1.8mm; vertical-align: top; }
+.dark td { border-bottom-color: #2A3E63; }
+tr { break-inside: avoid; }
+
+/* ---------- blockquotes ---------- */
+blockquote { border-left: 1.2mm solid var(--solar-accent); margin: 2mm 0; padding: 1mm 0 1mm 3mm;
+  font-size: 10.5pt; color: #26334D; break-inside: avoid; }
+.dark blockquote { color: var(--icy-cyan); }
+
+/* ---------- mission briefing layout ---------- */
+.mission-tag { display: inline-block; background: var(--solar-accent); color: #40260F;
+  font-weight: 700; font-size: 9pt; padding: 0.8mm 2.5mm; border-radius: 2mm; margin: 0 0 2.5mm; }
+.mission-layout { display: flex; gap: 6mm; margin-top: 2mm; }
+.mission-text { flex: 1; text-align: justify; hyphens: auto; }
+.mission-text h3 { break-after: avoid; }
+.qrbox { background: #fff; border: 0.5pt solid #B9C4D4; border-radius: 1.5mm; padding: 2mm; }
+.qrbox.static { width: 36mm; flex: none; text-align: center; }
+.qrbox.static img { width: 32mm; height: 32mm; }
+.qrbox p { font-size: 7pt; color: #4A5A75; margin: 1mm 0 0; }
+.dark .qrbox { background: #fff; }
+
+/* ---------- footer ---------- */
+footer.pageline { position: absolute; bottom: 8mm; left: var(--pad-x); right: var(--pad-x);
+  font-size: 7.5pt; color: #6B7A93; display: flex; align-items: center; gap: 3mm;
+  border-top: 0.4pt solid #B9C4D4; padding-top: 1.5mm; }
+.dark footer.pageline { color: #7E93B8; border-top-color: #2A3E63; }
+footer.pageline .wordmark { font-weight: 700; letter-spacing: 0.5pt; color: var(--deep-blue); }
+.dark footer.pageline .wordmark { color: var(--icy-cyan); }
+footer.pageline .sect { flex: 1; text-transform: uppercase; letter-spacing: 0.5pt; }
+footer.pageline .pageno { background: var(--deep-blue); color: #fff; padding: 0.6mm 2.6mm;
+  border-radius: 2mm; font-weight: 700; }
+.dark footer.pageline .pageno { background: #2A3E63; }

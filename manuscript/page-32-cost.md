@@ -20,8 +20,7 @@ references: [R21, R14]
 
 **The sustainability ledger ◆ [R14]:** every launch adds debris risk to shared orbits; every mega-constellation adds collision-avoidance load. Cleanup, deorbit rules and traffic coordination are now budget lines ::est:: — exploration's bill includes housekeeping.
 
-**Public value — the honest case ▲:** satellites for weather, navigation and communications return value daily ::est::; fundamental science returns understanding at uncertain, occasionally enormous, long-term rates. We think that's worth arguing for — with numbers, not slogans.
+**Public value — the honest case ▲:** satellites for weather, navigation and communications return value daily ::est::; fundamental science returns understanding at uncertain, occasionally enormous, long-term rates.
 
-**Advanced corner.** Compare *cost per scientific result* across programmes: sample-return, survey telescopes and small planetary missions score very differently — and economists argue about the metric itself ◆.
+**Advanced corner.** Compare *cost per scientific result* across programmes: sample-return, survey telescopes and small planetary missions score very differently.
 
-**Caption.** A 2050 in which space spending expands ▲ will need exactly this scrutiny from voters like you.

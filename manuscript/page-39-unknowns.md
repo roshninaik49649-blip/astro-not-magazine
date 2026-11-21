@@ -20,6 +20,5 @@ Our forecasts (p 7, p 37) describe *planned* discoveries. History insists on a c
 
 **Going deeper.** Pattern ::est::: surprise favours (1) new instruments, (2) archival re-analysis, (3) anomaly-tolerant minds. All three are affordable to a curious reader — instruments via open data [R17], archives via public datasets, minds via p 24's discipline.
 
-**Advanced corner.** Statistical humility: our 2050 forecast's biggest error term is not the known unknowns (biosignature ambiguity, dark sector) — it's the category that doesn't have a name yet ◆. That's why every forecast here carries ▲ and none carries ●.
+**Advanced corner.** Statistical humility: our 2050 forecast's biggest error term is not the known unknowns (biosignature ambiguity, dark sector) — it's the category that doesn't have a name yet ◆.
 
-**Caption.** The Universe doesn't change drastically by 2050 ::est:: — but the list of things we don't know will.

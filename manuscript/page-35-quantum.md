@@ -34,4 +34,3 @@ Between "quantum computing will change everything" and "quantum is a fad" lies a
 
 **Advanced corner.** Why clocks matter to physics: comparing clocks over a year can detect a drift of fundamental constants at ~10⁻¹⁸ level — so far: no drift found ::est::, a quiet but profound null result.
 
-**Caption.** The chart plots a log timeline of clock precision — one of the steepest sustained improvement curves in science ::est::.

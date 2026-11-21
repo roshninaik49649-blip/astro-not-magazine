@@ -9,14 +9,12 @@ references: []
 ---
 ## Contents
 
-:::chips
-:::chip cyan pp 01–08 · Opening
-:::chip pp 09–16 · Telescopes, exoplanets & life
-:::chip pp 17–24 · Black holes & the dark universe
-:::chip pp 25–32 · Moon, Mars & living off-world
-:::chip pp 33–40 · AI, quantum & futures
-:::chip sun pp 41–48 · Missions, voices & closing
-:::
+:::toc Opening — the question, the timescales, your predictions | pp 01–08
+:::toc Telescopes, exoplanets & the search for life | pp 09–16
+:::toc Black holes, gravity & the dark universe | pp 17–24
+:::toc Moon, Mars & living off-world | pp 25–32
+:::toc AI, quantum & the futures in between | pp 33–40
+:::toc Missions, voices & your next step | pp 41–48
 
 ### The evidence labels — learn these four
 
@@ -30,7 +28,7 @@ references: []
 ### The interactive symbol
 
 :::callout Six missions, one magnet
-A magnet icon marks six **Missions** — browser activities (M01–M06) you open via the QR codes printed on pp 8, 16, 20, 31, 36 and 44, or from the bundled `missions/` folder. They run entirely on your device; nothing is uploaded. Each has a verified answer key and a debrief — including the one where the correct answer is that the "discovery" was an artefact (M05).
+A magnet icon marks six **Missions** — browser activities (M01–M06) via the QR codes on pp 8, 16, 20, 31, 36 and 44, or the bundled `missions/` folder. They run entirely on your device; nothing is uploaded. Each has a verified answer key and a debrief — including M05, where the "discovery" is an artefact.
 :::
 
 ### Chapter one-liners
@@ -41,7 +39,3 @@ A magnet icon marks six **Missions** — browser activities (M01–M06) you open
 - **Off-world** — the Moon is a plan, Mars is hard, budgets are real
 - **AI & quantum** — machines that shortlist, humans who validate
 - **Closing** — a fictional case file, real voices, and your next step
-
-### Reader promise
-
-Every claim tagged. Every simulation labelled. Every source on p 47. Every unknown written as **[NEEDS VERIFICATION]**.

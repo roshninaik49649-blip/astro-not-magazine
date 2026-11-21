@@ -24,4 +24,3 @@ figure_alt: "Horizontal bar chart comparing typical wavelengths of optical, infr
 
 **Advanced corner.** Multi-band *transfer learning* is how many discoveries actually happen: a radio burst triggers an optical search, which triggers an X-ray follow-up. The 2017 neutron-star merger was found this way — light + gravity together (p 19) ::est:: [R17].
 
-**Caption.** The bar chart compares typical wavelengths on a log scale — the span shown is a factor of about a trillion.

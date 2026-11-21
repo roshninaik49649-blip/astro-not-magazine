@@ -23,4 +23,3 @@ So one spectrum ≠ one conclusion. Researchers now design tests that look for *
 
 **Advanced corner.** Bayesian framing helps: the probability that a detected gas is biological depends on the prior that life exists at all — which we cannot yet measure from a sample size of one habitable biosphere. Expect any 2050-era "life candidate" to be probabilistic and contested ◆, not a verdict.
 
-**Caption.** The honest headline we'd print if a candidate appears: *"Something interesting. Not yet life."*

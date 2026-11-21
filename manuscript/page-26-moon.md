@@ -18,9 +18,9 @@ references: [R10, R09]
 :::chip sun Chandrayaan-3: first landing near the south pole (2023) ::est:: [R09]
 :::
 
-**Why go (the science ::est::):** polar ice, untouched geological record, and the far side's radio-quiet sky — a place to build instruments Earth's noise can't reach.
+**Why go ::est:::** polar ice, an untouched geological record, and the far side's radio-quiet sky.
 
-**Going deeper — what "sustained" means ▲.** Missions need: landers able to deliver tonnes, surface power surviving the 14-day night, and robotics that work while crews sleep. Artemis partners are building these piece by piece [R10] ◆. Timelines have slipped before; treat dates as plans, not promises ▲.
+**Going deeper — what "sustained" means ▲.** Missions need: landers able to deliver tonnes, surface power surviving the 14-day night, and robotics that work while crews sleep. Artemis partners are building these piece by piece [R10] ◆.
 
 **The Indian connection.** ISRO's Chandrayaan-3 landed near the lunar south pole in August 2023 — a first for any nation in that region ::est:: [R09] — proving precision landing on a budget. Lunar science is no longer a two-country club.
 
@@ -28,6 +28,5 @@ references: [R10, R09]
 Permanently shadowed craters may hold water ice ::est::, and elevated rims get near-continuous sunlight — landing-site selection is really a **resource-and-power decision** ◆ [R09, R10].
 :::
 
-**Advanced corner.** The binding constraint is logistics: every tonne delivered must justify its launch cost, which is why resource prospecting (ice, regolith chemistry) drives the site shortlist ◆.
+**Advanced corner.** The binding constraint is logistics: every tonne must justify its launch cost, which is why resource prospecting drives the site shortlist ◆.
 
-**Caption.** The Moon by 2050 ▲: small crews, science stations, possibly industry pilots. A "city" — not on current evidence.

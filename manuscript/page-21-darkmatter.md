@@ -16,8 +16,6 @@ simulated: true
 
 **Going deeper.** Either the galaxies are wrapped in unseen mass — **dark matter** ::est:: — or our law of gravity needs revising ◆. The evidence stack for unseen mass is strong: rotation curves, the motion of galaxy clusters, gravitational lensing (light bending where no visible mass sits), and the cosmic microwave background's pattern ::est:: [R11]. What we don't know: *what it is* ◆. Decades of direct-detection experiments have narrowed, not found, the particle ◆.
 
-**Lensing in one line.** Mass bends light; more bending than visible mass explains ⇒ more mass than we can see ::est::.
 
-**Advanced corner.** The SIMULATED curve above shows the textbook mismatch: dashed line = visible mass prediction, points = measured (synthetic) speeds. Real curves use tens of thousands of stellar velocity measurements per galaxy ◆.
+**Advanced corner.** The SIMULATED curve shows the textbook mismatch: dashed = visible-mass prediction, points = synthetic speeds. Real curves use tens of thousands of stellar velocities ◆.
 
-**Caption.** By 2050 ▲: expect sharper maps of where dark matter sits (Euclid-class lensing surveys [R11]) — and still, quite possibly, no answer to what it is.

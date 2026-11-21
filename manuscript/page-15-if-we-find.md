@@ -29,4 +29,3 @@ A responsible announcement names the uncertainty and the prior expectations; a v
 
 **Advanced corner.** Protocol design is now a research topic itself: some teams pre-register biosignature analysis plans before data arrives, so they cannot be tuned to a result ◆.
 
-**Caption.** By 2050 the most probable "discovery of life" is a contested candidate ▲ — possibly one we argue about for a decade.

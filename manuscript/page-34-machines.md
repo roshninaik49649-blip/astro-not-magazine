@@ -22,4 +22,3 @@ references: [R12]
 
 **2050 forecast ▲:** discovery pipelines will be AI-first at the shortlisting stage and human-first at the validation stage ::est:: — the hierarchy on p 24 doesn't automate away its rungs.
 
-**Caption.** A machine can find the needle; convincing anyone it's a needle is still a human act ::est::.

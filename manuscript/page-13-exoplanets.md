@@ -27,4 +27,3 @@ A planet with the right size and orbit could still be airless (like the Moon), h
 
 **Advanced corner.** Selection effects are the hidden error bar of the whole field. Transit surveys find close-in, large planets more easily — so raw statistics overstate such worlds until corrected. Mission teams publish detection efficiency curves for exactly this reason ◆ [R01].
 
-**Caption.** A richer catalogue by 2050 is a plausible projection ▲ — richer *understanding* will take longer.

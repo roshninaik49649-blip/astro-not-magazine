@@ -13,7 +13,7 @@ The space sector is mostly desks, code and careful engineering — plus a small,
 
 ### Research routes ::est::
 
-- **Physics/astronomy degrees → PhD → research.** The classical route to observatories and theory groups. Mathematics and programming carry the day; telescopes come later.
+- **Physics/astronomy degrees → PhD → research.** Mathematics and programming carry the day; telescopes come later.
 - **Instrumentation & optics.** Detectors, mirrors, cryogenics — engineering closer to hardware, in demand everywhere [R12].
 
 ### Engineering routes ::est::
@@ -26,8 +26,7 @@ The space sector is mostly desks, code and careful engineering — plus a small,
 - **Policy, law, ethics** — orbital debris rules and spectrum allocation are legal frontiers ::est:: [R14].
 - **Science communication, UX, mission design** — missions need people who can explain, plan and imagine.
 
-**Going deeper.** The realistic 2050 picture ▲: more jobs in space-adjacent industries (satellite servicing, debris management, lunar logistics) than jobs *in* space. The ratio is heavily tilted — and always has been.
+**Going deeper.** The realistic 2050 picture ▲: more jobs in space-adjacent industries (satellite servicing, debris management, lunar logistics) than jobs *in* space.
 
-**Advanced corner.** Build a portfolio the way missions build heritage: one small complete project (a light-curve fitter, a cubesat simulation, a data pipeline) beats five abandoned grand ones. Recruiters in the sector verify claims ::est:: — the same skill this magazine keeps teaching.
+**Advanced corner.** Build a portfolio the way missions build heritage: one small complete project (a light-curve fitter, a cubesat simulation, a data pipeline) beats five abandoned grand ones.
 
-**Caption.** No test can certify an astronaut by 2050 ▲ — but every one of these paths can start this year ::est::.

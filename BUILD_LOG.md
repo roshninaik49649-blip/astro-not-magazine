@@ -24,8 +24,49 @@ found 19 of 48 pages visually sparse (<6 % ink) and one factual inconsistency
   mean), no page content touches the 3 mm bleed edge, 48/48 pages, all QA
   checks pass, word count back within 9,000–12,000 after trimming genuine
   redundancy. AN-2050-017 QA relaxed to "required pages present, consistent
-  extras allowed" — contents/opener navigation chips now legitimately mention
-  the ID.
+   extras allowed" — contents/opener navigation chips now legitimately mention
+   the ID.
+
+## Layout rework v3 — "actually looks like a magazine"
+
+Two defects made the v2 PDF read as a report, not a magazine:
+
+- **tokens.css was never inlined.** `design/tokens.css` (all palette custom
+  properties) was missing from the builder's CSS list, so every `var(--…)`
+  resolved to nothing: dark pages rendered white, chips/badges invisible.
+  The builder now inlines tokens first and a pixel audit asserts that every
+  page declared `dark:` samples midnight navy (16,27,51) at its corner and
+  every light page samples paper (244,246,243).
+- **Article bodies were never wrapped in columns.** The `.cols3` rules existed
+  but no markup used them; the whole issue was one long single column.
+
+v3 page architecture by type: full-bleed hero art on covers and chapter
+openers; front-cover masthead (logo placeholder + wordmark); display chapter
+type (42 pt opener heads, 21 pt feature heads with a solar accent rule);
+justified, hyphenated 3-column article bodies with a larger standfirst and
+stacked in-column cards; 2-column mission briefings with the QR set beside the
+text; dotted-leader contents rows; footer with wordmark, running section and a
+page-number pill. Contents page (p 4) rebuilt around the `:::toc` component.
+
+WeasyPrint 70 limitations found and worked around (all measured, not guessed):
+
+- `::first-letter { float|inline-block }` inside multi-column sends the column
+  balancer into an unbounded loop; `break-inside: avoid` on callouts/pull
+  quotes compounds it. Drop caps removed; callouts may split at column breaks.
+- Flex `.cards`/`.chips` inside multi-column both overflow the sheet (p 46
+  spilled to a 49th page) and slow layout; in-column cards/chips now stack as
+  blocks in normal flow.
+- Letter-spacing above ~0.5 pt at these sizes makes pdftotext explode labels
+  into per-character "words", corrupting the word-count gate; furniture
+  tracking capped at 0.5 pt.
+- Manuscript `**Caption.**` paragraphs duplicated the builder's generated
+  figure captions; removed (19 pages), along with genuine redundancy, bringing
+  body copy to ~11,954 words (cap 12,000).
+
+Post-rework audit: 48/48 sheets in both editions, correct footer page number
+on every sheet, 0 sparse pages, no clipped final sentences, all QA/link/mission
+checks pass, build ~40 s per full run.
+
 
 
 ## Environment decisions
@@ -57,11 +98,11 @@ output kept as `astronot-print-cmyk.pdf`. Honest limitation: this is a colour
 re-encoding, **not** a press-ready X-1a with OutputIntent ICC. Print-shop
 separation still required before artwork lock.
 
-## QA results (final run)
+## QA results (final run, layout v3)
 
 - 48/48 pages in both editions; page mapping 1:1 verified via pdftotext.
 - All fonts embedded (subset) in both editions.
-- Word count: ~10,229 body words (target 9–12k).
+- Word count: ~11,954 body words (target 9–12k).
 - Contrast: all pairs ≥ 5.05:1 (WCAG AA pass).
 - Mission tests: M01 depth physics, M02 detection+false-alarm, M03 budget model,
   M04 answer key, M05 case key, M06 storage shape — all pass via node.

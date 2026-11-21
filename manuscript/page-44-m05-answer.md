@@ -22,8 +22,7 @@ qr: Q-M05
 
 ### Open the interactive portal
 
-QR code → missions/m05-cosmic-detective/index.html — the portal replays the full case: evidence board, your scorecard vs the resolution, and a debrief on why "instrumental" wins feel anticlimactic and are the *norm* ::est::.
+The portal replays the full case: evidence board, your scorecard vs the resolution, and a debrief on why "instrumental" wins feel anticlimactic and are the *norm* ::est::.
 
 **Rule of the case file:** every "dramatic discovery" you'll ever meet can be tested exactly this way ::est:: — most dramatic discoveries *fail* the test, and that's science working ::est::.
 
-**One more check:** observation ID AN-2050-017 appears consistently on pp 12, 41, 42, 43, 44 and in the portal — trace it; consistency is a QA requirement, not a stylistic flourish.

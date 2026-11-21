@@ -34,4 +34,3 @@ Robotic Mars argues for patience — not against ambition.
 
 **Advanced corner.** Sample return would let Earth's labs test for biosignatures with instruments no rover can carry ◆ — the highest-value Mars science currently in planning ▲.
 
-**Caption.** 2050 verdict ▲: a crewed Mars *landing attempt* is plausible; a self-sustaining city is fiction ✦ — and this magazine keeps that distinction.

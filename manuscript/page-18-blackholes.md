@@ -21,4 +21,3 @@ references: [R04, R17]
 
 **Advanced corner.** The shadow's diameter tests general relativity at strong-field limits. So far it agrees ::est::; deviations would be revolutionary (p 24's evidence hierarchy applies). By 2050 ▲ expect sharper images and movies of orbiting gas — refinements, not new physics.
 
-**Caption.** "Seeing" a black hole is really seeing its evidence. Chapter 5's case file (pp 41–44) will train you to weigh exactly this kind of inference.

@@ -34,4 +34,3 @@ Breakthroughs usually arrive at rung 3+ — after years at rungs 1–2. News hea
 
 **Going deeper.** The GW150914 announcement followed this ladder in public: candidate → internal cross-checks → community scrutiny → acceptance. The caution *looked* slow; it was the reason the result never had to be retracted ::est::.
 
-**Caption.** The Hubble tension (p 23) is currently a *tension*, not a breakthrough — the hierarchy tells you why we label it ◆.

@@ -20,4 +20,3 @@ simulated: true
 
 **Advanced corner.** The SIMULATED diagram plots H(z), the expansion rate versus redshift; the orange ΛCDM curve is the fitted model [R05]. Distinguishing a constant from an evolving component requires percent-level precision over a huge redshift range — a decade-long job ▲.
 
-**Caption.** 2050 forecast ▲: expansion continues accelerating ::est::; the *why* may still be open.
